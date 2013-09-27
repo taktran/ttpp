@@ -53,13 +53,38 @@
 
     function init() {
       var player1 = {
-          offset: $(".p-ship-1").offset()
+          // Half way
+          x: function() {
+            var left = $(".p-ship-1").offset()['left'],
+              width = $(".p-ship-1").width(),
+              x = left + (width / 2);
+
+            return x;
+          },
+          y: function() {
+            var top = $(".p-ship-1").offset()['top'],
+              height = $(".p-ship-1").height();
+
+            return top + height;
+          }
         },
         player2 = {
-          offset: $(".g-ship-1").offset()
+          // Half way
+          x: function() {
+            var left = $(".g-ship-1").offset()['left'],
+              width = $(".g-ship-1").width(),
+              x = left + (width / 2);
+
+            return x;
+          },
+          y: function() {
+            var top = $(".g-ship-1").offset()['top'];
+
+            return top;
+          }
         };
 
-      curve(player1.offset.left, player1.offset.top, player2.offset.left, player2.offset.top, "blue");
+      curve(player1.x(), player1.y(), player2.x(), player2.y(), "blue");
       animation = setInterval(animate, ANIMATION_SPEED);
     }
 
