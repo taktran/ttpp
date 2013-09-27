@@ -50,15 +50,15 @@
       var player1 = {
           // Half way
           x: function() {
-            var left = $(".p-ship-1").offset()['left'],
-              width = $(".p-ship-1").width(),
+            var left = $(".p1-ship-1").offset()['left'],
+              width = $(".p1-ship-1").width(),
               x = left + (width / 2);
 
             return x;
           },
           y: function() {
-            var top = $(".p-ship-1").offset()['top'],
-              height = $(".p-ship-1").height();
+            var top = $(".p1-ship-1").offset()['top'],
+              height = $(".p1-ship-1").height();
 
             return top + height;
           }
@@ -66,21 +66,23 @@
         player2 = {
           // Half way
           x: function() {
-            var left = $(".g-ship-1").offset()['left'],
-              width = $(".g-ship-1").width(),
+            var left = $(".p2-ship-1").offset()['left'],
+              width = $(".p2-ship-1").width(),
               x = left + (width / 2);
 
             return x;
           },
           y: function() {
-            var top = $(".g-ship-1").offset()['top'];
+            var top = $(".p2-ship-1").offset()['top'];
 
             return top;
           }
         };
 
-      curve(player1.x(), player1.y(), player2.x(), player2.y(), "blue");
-      animation = setInterval(animate, ANIMATION_INTERVAL);
+      $(".p1-ship").click(function() {
+        curve(player1.x(), player1.y(), player2.x(), player2.y(), "blue");
+        animation = setInterval(animate, ANIMATION_INTERVAL);
+      });
     }
 
     init();

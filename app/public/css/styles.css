@@ -368,18 +368,19 @@ body {
   float: left;
   width: 20%; }
 
-.p-ship {
+.p1-ship {
   background: url("../img/p-ship.svg"); }
 
-.g-ship {
+.p2-ship {
   background: url("../img/g-ship.svg"); }
 
-.p-ship,
-.g-ship {
+.p1-ship,
+.p2-ship {
   width: 40px;
   height: 76px;
   margin: 0 auto;
-  background-size: 100%; }
+  background-size: 100%;
+  cursor: pointer; }
 
 .purple-ships {
   top: 14px; }
