@@ -2,6 +2,8 @@
   'use strict';
 
   var ANIMATION_INTERVAL = 5; // milliseconds
+  var PLAYER_1_COLOR = "#5a55bd"; // Purple
+  var PLAYER_2_COLOR = "#3fbf6a"; // Green
 
   var e;
   var myPath;
@@ -114,12 +116,12 @@
         player2 = new Player(2);
 
       $(".p1-ship").click(function() {
-        var pew = new Pew(canvas, this, player1, player2, "purple");
+        var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
         pew.render();
       });
 
       $(".p2-ship").click(function() {
-        var pew = new Pew(canvas, this, player2, player1, "green");
+        var pew = new Pew(canvas, this, player2, player1, PLAYER_2_COLOR);
         pew.render();
       });
     }
