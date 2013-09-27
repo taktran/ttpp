@@ -4,6 +4,7 @@
   var ANIMATION_INTERVAL = 5; // milliseconds
   var PLAYER_1_COLOR = "#5a55bd"; // Purple
   var PLAYER_2_COLOR = "#3fbf6a"; // Green
+  var INITIAL_SHIELD_LEVEL = 5;
 
   var Player = Backbone.Model.extend({
     /**
@@ -13,12 +14,20 @@
      */
     initialize: function(num) {
       this.num = num;
+
+      this.shieldLevel = {};
+      for (var i = 1; i < this.numShips(); i++) {
+        this.shieldLevel[i] = INITIAL_SHIELD_LEVEL;
+      }
     },
     numShips: function() {
       return $(".p" + this.num + "-ships li").length;
     },
     elem: function(shipNum) {
       return $(".p" + this.num + "-ships li:nth-child(" + shipNum + ")");
+    },
+    elemShip: function(shipNum) {
+      return this.elem(shipNum).find(".p" + this.num + "-ship");
     },
     shipOffset: function(shipNum) {
       return this.elem(shipNum).offset();
@@ -37,6 +46,12 @@
 
       // Include height for player 1
       return (this.num === 1) ? top + height : top;
+    },
+
+    decrementShieldLevel: function(shipNum) {
+      if (this.shieldLevel[shipNum]) {
+        this.shieldLevel[shipNum]--;
+      }
     },
 
     /**
@@ -71,12 +86,27 @@
       return this.$el.parent().prevAll().length + 1;
     },
 
-    animate: function(self) {
+    animate: function(self, receiverShipNum) {
       if (self.path.getTotalLength() <= self.counter){   //break as soon as the total length is reached
         clearInterval(self.animation);
 
         // Delete bullet
         self.bullet.remove();
+
+        // Remove shield
+        var receiverShip = self.receiverPlayer.elemShip(receiverShipNum);
+
+        receiverShip.removeClass("level-" + self.receiverPlayer.shieldLevel[receiverShipNum]);
+        self.receiverPlayer.decrementShieldLevel(receiverShipNum);
+        receiverShip.addClass("level-" + self.receiverPlayer.shieldLevel[receiverShipNum]);
+
+        // Flash alert class
+        receiverShip.addClass("shield-alert")
+          .fadeOut(200)
+          .fadeIn(200, function() {
+            receiverShip.removeClass("shield-alert");
+          });
+
         return;
       }
       var pos = self.path.getPointAtLength(self.counter);   //get the position (see Raphael docs)
@@ -117,7 +147,7 @@
         this.receiverPlayer.y(receiverShipNum),
         this.color
       );
-      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this);
+      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShipNum);
     }
 
   });
