@@ -181,6 +181,10 @@ body{
   background-size: 100%;
   cursor: pointer;
   position: relative;
+
+  &.dead{
+    opacity: 0.4;
+  }
 }
 
 .p1-ships{

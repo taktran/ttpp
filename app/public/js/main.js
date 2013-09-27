@@ -54,6 +54,10 @@
       }
     },
 
+    isDead: function(shipNum) {
+      return this.shieldLevel[shipNum] <= 0;
+    },
+
     /**
      * Get the ship number to number
      */
@@ -92,6 +96,7 @@
 
         // Delete bullet
         self.bullet.remove();
+        self.path.remove();
 
         // Remove shield
         var receiverShip = self.receiverPlayer.elemShip(receiverShipNum);
@@ -106,6 +111,11 @@
           .fadeIn(200, function() {
             receiverShip.removeClass("shield-alert");
           });
+
+        // Check if dead
+        if (self.receiverPlayer.isDead(receiverShipNum)) {
+          receiverShip.addClass("dead");
+        }
 
         return;
       }

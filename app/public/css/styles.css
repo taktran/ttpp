@@ -427,6 +427,9 @@ body {
   background-size: 100%;
   cursor: pointer;
   position: relative; }
+  .p1-ship.dead,
+  .p2-ship.dead {
+    opacity: 0.4; }
 
 .p1-ships {
   top: 14px; }
