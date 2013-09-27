@@ -5,10 +5,6 @@
   var PLAYER_1_COLOR = "#5a55bd"; // Purple
   var PLAYER_2_COLOR = "#3fbf6a"; // Green
 
-  var e;
-  var myPath;
-  var animation;  //make the variables global, so you can access them in the animation function
-
   var Player = Backbone.Model.extend({
     /**
      * Initialize player
@@ -75,15 +71,15 @@
       return this.$el.parent().prevAll().length + 1;
     },
 
-    animate: function() {
-      if (myPath.getTotalLength() <= this.counter){   //break as soon as the total length is reached
-        clearInterval(animation);
+    animate: function(self) {
+      if (self.path.getTotalLength() <= self.counter){   //break as soon as the total length is reached
+        clearInterval(self.animation);
         return;
       }
-      var pos = myPath.getPointAtLength(this.counter);   //get the position (see Raphael docs)
-      e.attr({cx: pos.x, cy: pos.y});  //set the circle position
+      var pos = self.path.getPointAtLength(self.counter);   //get the position (see Raphael docs)
+      self.bullet.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
-      this.counter++; // count the step counter one up
+      self.counter++; // count the step counter one up
     },
 
     curve: function(initialX, initialY, finalX, finalY, colour) {
@@ -91,7 +87,7 @@
       var ay = Math.floor(Math.random() * 200) + (initialY - 100);
       var bx = Math.floor(Math.random() * 200) + (finalX - 200);
       var by = Math.floor(Math.random() * 200) + (finalY - 100);
-      e = this.canvas.circle(initialX, initialY, 5, 5).attr({
+      this.bullet = this.canvas.circle(initialX, initialY, 5, 5).attr({
         stroke: "none",
         fill: colour
       });
@@ -99,7 +95,7 @@
         ["M", initialX, initialY],
         ["C", ax, ay, bx, by, finalX, finalY]
       ];
-      myPath = this.canvas.path(path).attr({
+      this.path = this.canvas.path(path).attr({
         stroke: colour,
         "stroke-width": 2,
         "stroke-linecap": "round",
@@ -118,7 +114,7 @@
         this.receiverPlayer.y(receiverShipNum),
         this.color
       );
-      animation = setInterval(this.animate, ANIMATION_INTERVAL);
+      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this);
     }
 
   });
