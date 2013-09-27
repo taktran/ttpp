@@ -74,6 +74,9 @@
     animate: function(self) {
       if (self.path.getTotalLength() <= self.counter){   //break as soon as the total length is reached
         clearInterval(self.animation);
+
+        // Delete bullet
+        self.bullet.remove();
         return;
       }
       var pos = self.path.getPointAtLength(self.counter);   //get the position (see Raphael docs)
