@@ -95,7 +95,10 @@
         stroke: "none",
         fill: colour
       });
-      var path = [["M", initialX, initialY], ["C", ax, ay, bx, by, finalX, finalY]];
+      var path = [
+        ["M", initialX, initialY],
+        ["C", ax, ay, bx, by, finalX, finalY]
+      ];
       myPath = this.canvas.path(path).attr({
         stroke: colour,
         "stroke-width": 2,
