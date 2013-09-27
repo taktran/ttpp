@@ -9,10 +9,11 @@
   $(function() {
 
       var r = Raphael("canvas", 620, 420),
-          discattr = {
-              fill: "#666",
-              stroke: "none"
-          };
+        discattr = {
+          fill: "#666",
+          stroke: "none"
+        },
+        ANIMATION_SPEED = 10; // milliseconds
 
 
       var counter = 0;    // a counter that counts animation steps
@@ -47,7 +48,7 @@
       }
       curve(100, 100, 300, 300,"blue");
 
-      animation = setInterval(animate, 10);  //execute the animation function all 10ms (change the value for another speed)
+      animation = setInterval(animate, ANIMATION_SPEED);
   });
 
 })();
