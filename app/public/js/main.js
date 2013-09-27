@@ -6,13 +6,26 @@
   var animation;  //make the variables global, so you can access them in the animation function
 
 
-  window.onload = function() {
+  $(function() {
 
       var r = Raphael("canvas", 620, 420),
           discattr = {
               fill: "#666",
               stroke: "none"
           };
+
+
+      var counter = 0;    // a counter that counts animation steps
+      var animate = function() {
+          if(myPath.getTotalLength() <= counter){   //break as soon as the total length is reached
+              clearInterval(animation);
+              return;
+          }
+          var pos = myPath.getPointAtLength(counter);   //get the position (see Raphael docs)
+          e.attr({cx: pos.x, cy: pos.y});  //set the circle position
+
+          counter++; // count the step counter one up
+      };
 
       function curve(initialX, initialY, finalX, finalY, colour) {
           var ax = Math.floor(Math.random() * 200) + initialX;
@@ -34,20 +47,7 @@
       }
       curve(100, 100, 300, 300,"blue");
 
-      animation = window.setInterval("animate()", 10);  //execute the animation function all 10ms (change the value for another speed)
-  };
-
-  var counter = 0;    // a counter that counts animation steps
-  window.animate = function() {
-      if(myPath.getTotalLength() <= counter){   //break as soon as the total length is reached
-          clearInterval(animation);
-          return;
-      }
-      var pos = myPath.getPointAtLength(counter);   //get the position (see Raphael docs)
-      e.attr({cx: pos.x, cy: pos.y});  //set the circle position
-
-      counter++; // count the step counter one up
-  };
-
+      animation = setInterval(animate, 10);  //execute the animation function all 10ms (change the value for another speed)
+  });
 
 })();
