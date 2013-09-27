@@ -260,7 +260,8 @@ input[type="submit"] {
   list-style: disc;
   padding-left: 1em; }
 
-.clear-fix:after {
+.clear-fix:after, .p1-ships:after,
+.p2-ships:after {
   content: "";
   display: table;
   clear: both; }

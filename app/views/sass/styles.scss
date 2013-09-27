@@ -78,7 +78,7 @@ body{
 
 .p1-ships,
 .p2-ships{
-  @extend .clea-fix;
+  @extend .clear-fix;
   position: fixed;
   width: 100%;
 
