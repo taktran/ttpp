@@ -18,7 +18,7 @@
 
     var counter = 0;    // a counter that counts animation steps
     var animate = function() {
-      if(myPath.getTotalLength() <= counter){   //break as soon as the total length is reached
+      if (myPath.getTotalLength() <= counter){   //break as soon as the total length is reached
         clearInterval(animation);
         return;
       }
@@ -42,7 +42,7 @@
         stroke: colour,
         "stroke-width": 2,
         "stroke-linecap": "round",
-        "stroke-opacity": 0.2
+        "stroke-opacity": 1
       });
       r.set(r.circle(initialX, initialY, 5).attr(discattr), r.circle(finalX, finalY, 5).attr(discattr));
     }
