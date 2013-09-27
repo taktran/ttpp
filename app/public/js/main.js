@@ -8,23 +8,31 @@
   var animation;  //make the variables global, so you can access them in the animation function
 
   var Player = Backbone.Model.extend({
+    /**
+     * Initialize player
+     *
+     * @param  {[type]} num player number
+     */
     initialize: function(num) {
       this.num = num;
-
-      // Only do ship 1 for now
-      this.elem = $(".p" + num + "-ship-1");
+    },
+    elem: function(shipNum) {
+      return $(".p" + this.num + "-ship-" + shipNum);
+    },
+    shipOffset: function(shipNum) {
+      return this.elem(shipNum).offset();
     },
     // Half way
-    x: function() {
-      var left = this.elem.offset()['left'],
-        width = this.elem.width(),
+    x: function(shipNum) {
+      var left = this.shipOffset(shipNum)['left'],
+        width = this.elem(shipNum).width(),
         x = left + (width / 2);
 
       return x;
     },
-    y: function() {
-      var top = this.elem.offset()['top'],
-        height = this.elem.height();
+    y: function(shipNum) {
+      var top = this.shipOffset(shipNum)['top'],
+        height = this.elem(shipNum).height();
 
       // Include height for player 1
       return (this.num === 1) ? top + height : top;
@@ -74,7 +82,13 @@
 
     // Fire pew pew
     render: function() {
-      this.curve(this.attackPlayer.x(), this.attackPlayer.y(), this.receiverPlayer.x(), this.receiverPlayer.y(), this.color);
+      this.curve(
+        this.attackPlayer.x(this.shipNum),
+        this.attackPlayer.y(this.shipNum),
+        this.receiverPlayer.x(this.shipNum),
+        this.receiverPlayer.y(this.shipNum),
+        this.color
+      );
       animation = setInterval(this.animate, ANIMATION_INTERVAL);
     }
 
@@ -90,7 +104,8 @@
         player2 = new Player(2);
 
       $(".p1-ship").click(function() {
-        var pew = new Pew(canvas, player1, player2, 1, "blue");
+        var shipNum = $(this).data("id"),
+          pew = new Pew(canvas, player1, player2, shipNum, "blue");
         pew.render();
       });
     }
