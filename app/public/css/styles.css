@@ -164,7 +164,7 @@ table {
   -webkit-font-smoothing: antialiased; }
 
 body {
-  background-color: white;
+  background-color: #020a12;
   color: black;
   font-size: 1.0625em;
   font-family: sans-serif;
@@ -216,7 +216,7 @@ pre {
   border-radius: 0.2em;
   padding: .85em 1.05em;
   background-color: #333333;
-  color: white; }
+  color: #020a12; }
 
 p code,
 p samp {
@@ -225,8 +225,8 @@ p samp {
   -webkit-border-radius: 0.2em;
   border-radius: 0.2em;
   padding: 0 .4em;
-  border: 1px solid #dfdfdf;
-  background-color: whitesmoke; }
+  border: 1px solid black;
+  background-color: black; }
 
 hr {
   margin: 2em 0;
@@ -244,8 +244,8 @@ input[type="submit"] {
   display: inline-block;
   padding: .3em .5em;
   border: 0;
-  background-color: #b3b3b3;
-  color: white;
+  background-color: black;
+  color: #020a12;
   text-decoration: none;
   font-weight: normal;
   line-height: 1; }
@@ -253,8 +253,8 @@ input[type="submit"] {
   input[type="button"]:hover,
   input[type="reset"]:hover,
   input[type="submit"]:hover {
-    background-color: #999999;
-    color: white; }
+    background-color: black;
+    color: #020a12; }
 
 .text-list {
   list-style: disc;
@@ -336,3 +336,24 @@ h5 {
 
 h6 {
   margin-bottom: 0.8em; }
+
+body {
+  background: #020a12 url("../img/star-bg.png");
+  background-size: 50%;
+  position: relative; }
+  body:after, body:before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 358px;
+    opacity: .5; }
+  body:before {
+    background: url("../img/px-grad.png");
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg); }
+  body:after {
+    background: url("../img/px-grad.png");
+    bottom: 0; }

@@ -46,3 +46,31 @@
 // DEV-STYLES
 //===============================================================================
 // playground for development
+body{
+  background: $paper url('../img/star-bg.png');
+  background-size: 50%;
+  position: relative;
+
+  &:after,
+  &:before{
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 358px;
+    opacity: .5;
+  }
+
+  &:before{
+    background: url('../img/px-grad.png');
+    -webkit-transform: rotate(180deg);  
+    -moz-transform: rotate(180deg);  
+    -ms-transform: rotate(180deg);  
+    -o-transform: rotate(180deg);  
+    transform: rotate(180deg); 
+  }
+
+  &:after{
+    background: url('../img/px-grad.png');   
+    bottom: 0;
+  }
+}
