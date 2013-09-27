@@ -18,6 +18,9 @@
     initialize: function(num) {
       this.num = num;
     },
+    numShips: function() {
+      return $(".p" + this.num + "-ships li").length;
+    },
     elem: function(shipNum) {
       return $(".p" + this.num + "-ships li:nth-child(" + shipNum + ")");
     },
@@ -38,6 +41,16 @@
 
       // Include height for player 1
       return (this.num === 1) ? top + height : top;
+    },
+
+    /**
+     * Get the ship number to number
+     */
+    randomShipNum: function() {
+      var numTargetShips = this.numShips(),
+        randomShip = Math.floor(Math.random() * numTargetShips) + 1;
+
+      return randomShip;
     }
   });
 
@@ -93,12 +106,13 @@
 
     // Fire pew pew
     render: function() {
-      var shipNum = this.shipNum();
+      var shipNum = this.shipNum(),
+        receiverShipNum = this.receiverPlayer.randomShipNum();
       this.curve(
         this.attackPlayer.x(shipNum),
         this.attackPlayer.y(shipNum),
-        this.receiverPlayer.x(shipNum),
-        this.receiverPlayer.y(shipNum),
+        this.receiverPlayer.x(receiverShipNum),
+        this.receiverPlayer.y(receiverShipNum),
         this.color
       );
       animation = setInterval(this.animate, ANIMATION_INTERVAL);
