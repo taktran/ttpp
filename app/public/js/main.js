@@ -10,7 +10,7 @@
     /**
      * Initialize player
      *
-     * @param  {[type]} num player number
+     * @param  {Integer} num player number
      */
     initialize: function(num) {
       this.num = num;
