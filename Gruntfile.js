@@ -52,7 +52,7 @@ module.exports = function (grunt) {
     sass: {
       dist: {
         files: {
-          '<%= app.publicBase %>/css/main.css': '<%= app.sassDir %>/main.scss'
+          '<%= app.publicBase %>/css/styles.css': '<%= app.sassDir %>/styles.scss'
         }
       }
     },
