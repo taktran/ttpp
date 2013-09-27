@@ -46,9 +46,13 @@
       });
       r.set(r.circle(initialX, initialY, 5).attr(discattr), r.circle(finalX, finalY, 5).attr(discattr));
     }
-    curve(100, 100, 300, 300,"blue");
 
-    animation = setInterval(animate, ANIMATION_SPEED);
+    function init() {
+      curve(100, 100, 300, 300, "blue");
+      animation = setInterval(animate, ANIMATION_SPEED);
+    }
+
+    init();
   });
 
 })();
