@@ -13,7 +13,7 @@
     };
 
     var r = new Raphael("canvas", canvas.width, canvas.height),
-      ANIMATION_SPEED = 10; // milliseconds
+      ANIMATION_INTERVAL = 5; // milliseconds
 
 
     var counter = 0;    // a counter that counts animation steps
@@ -80,7 +80,7 @@
         };
 
       curve(player1.x(), player1.y(), player2.x(), player2.y(), "blue");
-      animation = setInterval(animate, ANIMATION_SPEED);
+      animation = setInterval(animate, ANIMATION_INTERVAL);
     }
 
     init();
