@@ -17,7 +17,7 @@
       this.num = num;
     },
     elem: function(shipNum) {
-      return $(".p" + this.num + "-ship-" + shipNum);
+      return $(".p" + this.num + "-ships li:nth-child(" + shipNum + ")");
     },
     shipOffset: function(shipNum) {
       return this.elem(shipNum).offset();

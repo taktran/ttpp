@@ -76,8 +76,8 @@ body{
   }
 }
 
-.purple-ships,
-.green-ships{
+.p1-ships,
+.p2-ships{
   @extend .clea-fix;
   position: fixed;
   width: 100%;
@@ -183,11 +183,11 @@ body{
   position: relative;
 }
 
-.purple-ships{
+.p1-ships{
   top: 14px;
 }
 
-.green-ships{
+.p2-ships{
   bottom: 0;
 }
 

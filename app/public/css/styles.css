@@ -359,8 +359,8 @@ body {
     background: url("../img/px-grad.png");
     bottom: 0; }
 
-.purple-ships,
-.green-ships {
+.p1-ships,
+.p2-ships {
   position: fixed;
   width: 100%; }
 
@@ -427,8 +427,8 @@ body {
   cursor: pointer;
   position: relative; }
 
-.purple-ships {
+.p1-ships {
   top: 14px; }
 
-.green-ships {
+.p2-ships {
   bottom: 0; }
