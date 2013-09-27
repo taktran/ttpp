@@ -91,10 +91,86 @@ body{
 
 .p-ship{
   background: url('../img/p-ship.svg');
+
+  &:before{
+    content: '';
+    width: 50px;
+    position: absolute;
+    top: 78px;
+    left: -4px;
+    background: url('../img/p-shield.svg');
+    background-position: center top;
+  }
+
+  &.level-5:before{
+    height: 29px;
+  }
+
+  &.level-4:before{
+    height: 24px;
+  }
+
+  &.level-3:before{
+    height: 18px;
+  }
+
+  &.level-2:before{
+    height: 12px;
+  }
+
+  &.level-1:before{
+    height: 6px;
+  }
+
+  &.level-0:before{
+    height: 0;
+  }
+
+  &.shield-alert:before{
+    background: url('../img/shield-alert.svg');
+  }
 }
 
 .g-ship{
   background: url('../img/g-ship.svg');
+
+  &:before{
+    content: '';
+    width: 50px;
+    position: absolute;
+    bottom: 78px;
+    left: -4px;
+    background: url('../img/g-shield.svg');
+    background-position: center bottom;
+  }
+
+  &.level-5:before{
+    height: 29px;
+  }
+
+  &.level-4:before{
+    height: 24px;
+  }
+
+  &.level-3:before{
+    height: 18px;
+  }
+
+  &.level-2:before{
+    height: 12px;
+  }
+
+  &.level-1:before{
+    height: 6px;
+  }
+
+  &.level-0:before{
+    height: 0;
+  }
+
+  &.shield-alert:before{
+    background: url('../img/shield-alert.svg');
+  }
 }
 
 .p-ship,
@@ -103,6 +179,7 @@ body{
   height: 76px;
   margin: 0 auto;
   background-size: 100%;
+  position: relative;
 }
 
 .purple-ships{
