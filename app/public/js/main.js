@@ -7,8 +7,12 @@
 
 
   $(function() {
+    var canvas = {
+      height: window.outerHeight,
+      width: window.outerWidth
+    };
 
-    var r = new Raphael("canvas", 620, 420),
+    var r = new Raphael("canvas", canvas.width, canvas.height),
       discattr = {
         fill: "#666",
         stroke: "none"
@@ -48,7 +52,14 @@
     }
 
     function init() {
-      curve(100, 100, 300, 300, "blue");
+      var player1 = {
+          offset: $(".p-ship-1").offset()
+        },
+        player2 = {
+          offset: $(".g-ship-1").offset()
+        };
+
+      curve(player1.offset.left, player1.offset.top, player2.offset.left, player2.offset.top, "blue");
       animation = setInterval(animate, ANIMATION_SPEED);
     }
 
