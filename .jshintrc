@@ -37,6 +37,8 @@
     "xdescribe": true,
     "xit": true,
     "expect": true,
-    "beforeEach": true
+    "beforeEach": true,
+
+    "Raphael": true
   }
 }
