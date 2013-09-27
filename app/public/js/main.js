@@ -41,14 +41,23 @@
 
   // Pew pew pew! Fire pew view
   var Pew = Backbone.View.extend({
-    initialize: function(canvas, attackPlayerModel, receiverPlayerModel, shipNum, color) {
+    initialize: function(canvas, elem, attackPlayerModel, receiverPlayerModel, color) {
       this.canvas = canvas;
+      this.setElement(elem);
       this.attackPlayer = attackPlayerModel;
       this.receiverPlayer = receiverPlayerModel;
-      this.shipNum = shipNum;
       this.color = color;
 
       this.counter = 0;    // a counter that counts animation steps
+    },
+
+    /**
+     * Ship number based on what number the `el` is in the list. Start from 1.
+     *
+     * @return {Integer} ship number
+     */
+    shipNum: function() {
+      return this.$el.parent().prevAll().length + 1;
     },
 
     animate: function() {
@@ -82,11 +91,12 @@
 
     // Fire pew pew
     render: function() {
+      var shipNum = this.shipNum();
       this.curve(
-        this.attackPlayer.x(this.shipNum),
-        this.attackPlayer.y(this.shipNum),
-        this.receiverPlayer.x(this.shipNum),
-        this.receiverPlayer.y(this.shipNum),
+        this.attackPlayer.x(shipNum),
+        this.attackPlayer.y(shipNum),
+        this.receiverPlayer.x(shipNum),
+        this.receiverPlayer.y(shipNum),
         this.color
       );
       animation = setInterval(this.animate, ANIMATION_INTERVAL);
@@ -104,14 +114,12 @@
         player2 = new Player(2);
 
       $(".p1-ship").click(function() {
-        var shipNum = $(this).data("id"),
-          pew = new Pew(canvas, player1, player2, shipNum, "purple");
+        var pew = new Pew(canvas, this, player1, player2, "purple");
         pew.render();
       });
 
       $(".p2-ship").click(function() {
-        var shipNum = $(this).data("id"),
-          pew = new Pew(canvas, player2, player1, shipNum, "green");
+        var pew = new Pew(canvas, this, player2, player1, "green");
         pew.render();
       });
     }
