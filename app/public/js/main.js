@@ -43,9 +43,9 @@
 
   // Pew pew pew! Fire pew view
   var Pew = Backbone.View.extend({
-    initialize: function(canvas, elem, attackPlayerModel, receiverPlayerModel, color) {
+    initialize: function(canvas, attackerElem, attackPlayerModel, receiverPlayerModel, color) {
       this.canvas = canvas;
-      this.setElement(elem);
+      this.setElement(attackerElem);
       this.attackPlayer = attackPlayerModel;
       this.receiverPlayer = receiverPlayerModel;
       this.color = color;
