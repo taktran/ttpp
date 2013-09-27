@@ -1,0 +1,76 @@
+//===============================================================================
+// IMPORTS
+//===============================================================================
+// VARIABLES: define mixins for later use
+@import "_variables";
+
+// MIXINS: define mixins for later use
+@import "_mixins";
+
+// FONTS: @font-face rules 
+@import "_fonts";
+
+// NORMALIZE: normalize.css from ttp://necolas.github.io/normalize.css/
+@import "_normalize.scss";
+
+// THIRD-PARTY: styles for JS libs etc
+
+// ELEMENTS: styles for standard html elements
+@import "_elements";
+
+// HELPERS: helper classes. clear-fix etc 
+@import "_helpers";
+
+// LAYOUT: grids, wraps etc
+@import "_layout";
+
+// TYPOGRAPHY:
+@import "_typography";
+
+// SHARED-STYLES: styles used across multiple pages
+@import "_shared";
+
+// GLOBAL-ELEMENTS: elements that are used on every page. Eg headers & footers
+@import "_header";
+@import "_footer";
+
+// PAGES: styles per page
+
+// BROWSER-FIXES: styles per page
+@import "_browser-fixes";
+
+// MEDIA-QUERIES:
+@import "_media-queries";
+
+//===============================================================================
+// DEV-STYLES
+//===============================================================================
+// playground for development
+body{
+  background: $paper url('../img/star-bg.png');
+  background-size: 50%;
+  position: relative;
+
+  &:after,
+  &:before{
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 358px;
+    opacity: .5;
+  }
+
+  &:before{
+    background: url('../img/px-grad.png');
+    -webkit-transform: rotate(180deg);  
+    -moz-transform: rotate(180deg);  
+    -ms-transform: rotate(180deg);  
+    -o-transform: rotate(180deg);  
+    transform: rotate(180deg); 
+  }
+
+  &:after{
+    background: url('../img/px-grad.png');   
+    bottom: 0;
+  }
+}
