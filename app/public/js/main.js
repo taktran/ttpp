@@ -13,10 +13,6 @@
     };
 
     var r = new Raphael("canvas", canvas.width, canvas.height),
-      discattr = {
-        fill: "#666",
-        stroke: "none"
-      },
       ANIMATION_SPEED = 10; // milliseconds
 
 
@@ -48,7 +44,6 @@
         "stroke-linecap": "round",
         "stroke-opacity": 1
       });
-      r.set(r.circle(initialX, initialY, 5).attr(discattr), r.circle(finalX, finalY, 5).attr(discattr));
     }
 
     function init() {
