@@ -105,7 +105,13 @@
 
       $(".p1-ship").click(function() {
         var shipNum = $(this).data("id"),
-          pew = new Pew(canvas, player1, player2, shipNum, "blue");
+          pew = new Pew(canvas, player1, player2, shipNum, "purple");
+        pew.render();
+      });
+
+      $(".p2-ship").click(function() {
+        var shipNum = $(this).data("id"),
+          pew = new Pew(canvas, player2, player1, shipNum, "green");
         pew.render();
       });
     }
