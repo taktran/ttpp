@@ -7,7 +7,7 @@
 // MIXINS: define mixins for later use
 @import "_mixins";
 
-// FONTS: @font-face rules 
+// FONTS: @font-face rules
 @import "_fonts";
 
 // NORMALIZE: normalize.css from ttp://necolas.github.io/normalize.css/
@@ -18,7 +18,7 @@
 // ELEMENTS: styles for standard html elements
 @import "_elements";
 
-// HELPERS: helper classes. clear-fix etc 
+// HELPERS: helper classes. clear-fix etc
 @import "_helpers";
 
 // LAYOUT: grids, wraps etc
@@ -63,15 +63,15 @@ body{
 
   &:before{
     background: url('../img/px-grad.png');
-    -webkit-transform: rotate(180deg);  
-    -moz-transform: rotate(180deg);  
-    -ms-transform: rotate(180deg);  
-    -o-transform: rotate(180deg);  
-    transform: rotate(180deg); 
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
   }
 
   &:after{
-    background: url('../img/px-grad.png');   
+    background: url('../img/px-grad.png');
     bottom: 0;
   }
 }
@@ -82,27 +82,105 @@ body{
   position: fixed;
   width: 100%;
 
-} 
+}
 
 .ship-outer{
   float: left;
   width: 20%;
 }
 
-.p-ship{
+.p1-ship{
   background: url('../img/p-ship.svg');
+
+  &:before{
+    content: '';
+    width: 50px;
+    position: absolute;
+    top: 78px;
+    left: -4px;
+    background: url('../img/p-shield.svg');
+    background-position: center top;
+  }
+
+  &.level-5:before{
+    height: 29px;
+  }
+
+  &.level-4:before{
+    height: 24px;
+  }
+
+  &.level-3:before{
+    height: 18px;
+  }
+
+  &.level-2:before{
+    height: 12px;
+  }
+
+  &.level-1:before{
+    height: 6px;
+  }
+
+  &.level-0:before{
+    height: 0;
+  }
+
+  &.shield-alert:before{
+    background: url('../img/shield-alert.svg');
+  }
 }
 
-.g-ship{
+.p2-ship{
   background: url('../img/g-ship.svg');
+
+  &:before{
+    content: '';
+    width: 50px;
+    position: absolute;
+    bottom: 78px;
+    left: -4px;
+    background: url('../img/g-shield.svg');
+    background-position: center bottom;
+  }
+
+  &.level-5:before{
+    height: 29px;
+  }
+
+  &.level-4:before{
+    height: 24px;
+  }
+
+  &.level-3:before{
+    height: 18px;
+  }
+
+  &.level-2:before{
+    height: 12px;
+  }
+
+  &.level-1:before{
+    height: 6px;
+  }
+
+  &.level-0:before{
+    height: 0;
+  }
+
+  &.shield-alert:before{
+    background: url('../img/shield-alert.svg');
+  }
 }
 
-.p-ship,
-.g-ship{
+.p1-ship,
+.p2-ship{
   width: 40px;
   height: 76px;
   margin: 0 auto;
   background-size: 100%;
+  cursor: pointer;
+  position: relative;
 }
 
 .purple-ships{

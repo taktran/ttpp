@@ -8,8 +8,9 @@
     "components"
   ],
   "dependencies": {
-    "bootstrap": "https://github.com/twbs/bootstrap/archive/3.0.0-wip.zip",
     "jquery": "~1.10.x",
-    "raphael": "~2.1.2"
+    "raphael": "~2.1.2",
+    "backbone": "~1.0.0",
+    "underscore": "~1.5.2"
   }
 }
