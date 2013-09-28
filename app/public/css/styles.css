@@ -431,7 +431,12 @@ body {
 .p2-ships .level-0 .p2-ship:before {
   height: 0; }
 .p2-ships .shield-alert .p2-ship:before {
-  background: url("../img/shield-alert.svg"); }
+  background: url("../img/shield-alert.svg");
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg); }
 
 .p1-ship,
 .p2-ship {
