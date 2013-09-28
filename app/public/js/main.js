@@ -20,7 +20,7 @@
       this.ships = new Ships([], this);
       for (var i = 0; i < hash.initShipNum; i++) {
         this.ships.add(new Ship({
-          num: i,
+          id: i,
           playerModel: this
         }));
       }
@@ -47,7 +47,7 @@
     },
 
     elem: function() {
-      return $(".p" + this.playerNum + "-ships li:nth-child(" + this.num + ")");
+      return $(".p" + this.playerNum + "-ships li[data-id=" + this.id + "]");
     },
     elemShip: function() {
       return this.elem().find(".p" + this.playerNum + "-ship");
@@ -89,15 +89,11 @@
       this.playerNum = playerModel.num;
     },
 
-    numShips: function() {
-      return $(".p" + this.playerNum + "-ships li").length;
-    },
-
     random: function() {
-      var numTargetShips = this.numShips(),
-        randomShipNum = Math.floor(Math.random() * numTargetShips) + 1;
+      var numTargetShips = this.length,
+        randomShipNum = Math.floor(Math.random() * numTargetShips);
 
-      return this.get(randomShipNum);
+      return this.models[randomShipNum];
     }
   });
 
@@ -118,15 +114,6 @@
       this.color = color;
 
       this.counter = 0;    // a counter that counts animation steps
-    },
-
-    /**
-     * Ship number based on what number the `el` is in the list. Start from 1.
-     *
-     * @return {Integer} ship number
-     */
-    shipNum: function() {
-      return this.$el.parent().prevAll().length + 1;
     },
 
     animate: function(self, receiverShip) {
@@ -183,6 +170,10 @@
         "stroke-linecap": "round",
         "stroke-opacity": 1
       });
+    },
+
+    shipNum: function() {
+      return this.$el.parent().data();
     },
 
     // Fire pew pew
