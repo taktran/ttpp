@@ -178,46 +178,12 @@
     },
 
     animate: function(counter, self, receiverShip) {
-      if (self.path.getTotalLength() <= counter) {   //break as soon as the total length is reached
-
-        // Delete bullet
-        self.bullet.remove();
-        _.each(self.prevBullets, function(bullet) {
-          if (bullet) {
-            bullet.remove();
-          }
-        });
-        self.path.remove();
-        if (App.guidesOn) {
-          self.guidePath1.remove();
-          self.guidePath2.remove();
-        }
-
-        // Remove shield
-        var receiverShipElem = receiverShip.elem();
-
-        receiverShipElem.removeClass("level-" + receiverShip.shieldLevel);
-        receiverShip.decrementShieldLevel();
-        receiverShipElem.addClass("level-" + receiverShip.shieldLevel);
-
-        // Flash alert class
-        receiverShipElem.addClass("shield-alert")
-          .fadeOut(200)
-          .fadeIn(200, function() {
-            receiverShipElem.removeClass("shield-alert");
-          });
-
-        // Check if dead
-        if (receiverShip.isDead()) {
-          receiverShipElem.addClass("dead");
-        }
-
-        if (self.receiverPlayer.isDead()) {
-          App.state.gameOver(self.attackPlayer, self.receiverPlayer);
-        }
-
+      if (!self.path.getTotalLength() || // HACK: Not sure why it gets in here
+          self.path.getTotalLength() <= counter) {
+        this.tween.stop();
         return;
       }
+
       var pos = self.path.getPointAtLength(counter);   //get the position (see Raphael docs)
       self.bullet.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
@@ -312,7 +278,6 @@
           receiverShip.y(),
           this.color
         );
-        // this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
 
         var pathData = {
             counter: 0
@@ -327,15 +292,50 @@
           TWEEN.update();
         };
 
-        var tween = new TWEEN.Tween(pathData)
+        this.tween = new TWEEN.Tween(pathData)
           .to(pathDataFinal, duration)
           // NOTE: because it is a counter, can't use an easing that has negative
-          .easing(TWEEN.Easing.Quartic.InOut)
+          .easing(TWEEN.Easing.Linear.None)
           .onUpdate(function () {
-            self.animate(pathData.counter, self, self.receiverShip);
-          });
+            self.animate(pathData.counter, self, receiverShip);
+          })
+          .onComplete(function() {
+            // Delete bullet
+            self.bullet.remove();
+            _.each(self.prevBullets, function(bullet) {
+              if (bullet) {
+                bullet.remove();
+              }
+            });
+            self.path.remove();
+            if (App.guidesOn) {
+              self.guidePath1.remove();
+              self.guidePath2.remove();
+            }
 
-        tween.start();
+            // Remove shield
+            var receiverShipElem = receiverShip.elem();
+
+            receiverShipElem.removeClass("level-" + receiverShip.shieldLevel);
+            receiverShip.decrementShieldLevel();
+            receiverShipElem.addClass("level-" + receiverShip.shieldLevel);
+
+            // Flash alert class
+            receiverShipElem.addClass("shield-alert")
+              .fadeOut(200)
+              .fadeIn(200, function() {
+                receiverShipElem.removeClass("shield-alert");
+              });
+
+            // Check if dead
+            if (receiverShip.isDead()) {
+              receiverShipElem.addClass("dead");
+            }
+
+            if (self.receiverPlayer.isDead()) {
+              App.state.gameOver(self.attackPlayer, self.receiverPlayer);
+            }
+          }).start();
 
         tweenUpdate();
 
