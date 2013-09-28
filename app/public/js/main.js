@@ -8,6 +8,8 @@
 
   var MAX_SHIELD_LEVEL = 5;
   var MAX_NUM_SHIPS = 5;
+  var LENGTH_OF_BULLET_SNAKE = 5;
+  var BULLET_PATH_INTERVALS = 5; // The frequency path intervals
 
   var App = {};
 
@@ -172,6 +174,7 @@
       this.color = color;
 
       this.counter = 0;    // a counter that counts animation steps
+      this.prevBullets = [];
     },
 
     animate: function(self, receiverShip) {
@@ -180,6 +183,11 @@
 
         // Delete bullet
         self.bullet.remove();
+        _.each(self.prevBullets, function(bullet) {
+          if (bullet) {
+            bullet.remove();
+          }
+        });
         self.path.remove();
         if (App.guidesOn) {
           self.guidePath1.remove();
@@ -214,6 +222,13 @@
       var pos = self.path.getPointAtLength(self.counter);   //get the position (see Raphael docs)
       self.bullet.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
+      // Draw rest of bullet snake
+      for (var i = 0; i < LENGTH_OF_BULLET_SNAKE; i++) {
+        var prevCounter = Math.max(0, self.counter - (i * BULLET_PATH_INTERVALS));
+        var prevPos = self.path.getPointAtLength(prevCounter);
+        self.prevBullets[i].attr({cx: prevPos.x, cy: prevPos.y});
+      }
+
       self.counter++; // count the step counter one up
     },
 
@@ -236,6 +251,14 @@
         stroke: "none",
         fill: colour
       });
+      // Draw rest of bullet snake
+      for (var i = 0; i < LENGTH_OF_BULLET_SNAKE; i++) {
+        this.prevBullets[i] = this.canvas.circle(initialX, initialY, 5, 5).attr({
+          stroke: "none",
+          fill: colour
+        });
+      }
+
       var path = [
         ["M", initialX, initialY],
         ["C", ax, ay, bx, by, finalX, finalY]
