@@ -69,7 +69,7 @@
         height = this.elem().height();
 
       // Include height for player 1
-      return (this.num === 1) ? top + height : top;
+      return (this.playerNum === 1) ? top + height : top;
     },
 
     decrementShieldLevel: function() {
