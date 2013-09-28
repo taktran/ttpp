@@ -41,9 +41,7 @@
   });
 
   var Ship = Backbone.Model.extend({
-    idAttribute: 'num',
     initialize: function(hash) {
-      this.num = hash.num;
       this.playerNum = hash.playerModel.num;
       this.shieldLevel = INITIAL_SHIELD_LEVEL;
     },
