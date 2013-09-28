@@ -8,6 +8,19 @@
   var INITIAL_SHIELD_LEVEL = 5;
   var INITIAL_NUM_SHIPS = 5;
 
+  var App = {};
+
+  var GameState = Backbone.Model.extend({
+    initialize: function() {
+      this.isGameOver = false;
+    },
+    gameOver: function(winner, loser) {
+      this.set('isGameOver', false);
+      this.set('winner', winner);
+      this.set('loser', loser);
+    }
+  });
+
   var Player = Backbone.Model.extend({
     /**
      * Initialize player
@@ -37,6 +50,10 @@
 
     randomShip: function() {
       return this.ships.random();
+    },
+
+    isDead: function() {
+      return this.ships.allDead();
     }
   });
 
@@ -90,12 +107,20 @@
     },
 
     random: function() {
-      var shipsNotDead = _.reject(this.models, function(ship) {
-          return ship.isDead();
-        }),
+      var shipsNotDead = this.notDead(),
         randomShipNum = Math.floor(Math.random() * shipsNotDead.length);
 
       return shipsNotDead[randomShipNum];
+    },
+
+    notDead: function() {
+      return _.reject(this.models, function(ship) {
+        return ship.isDead();
+      });
+    },
+
+    allDead: function() {
+      return this.notDead().length <= 0;
     }
   });
 
@@ -143,6 +168,10 @@
         // Check if dead
         if (receiverShip.isDead()) {
           receiverShipElem.addClass("dead");
+        }
+
+        if (self.receiverPlayer.isDead()) {
+          App.state.gameOver(self.attackPlayer, self.receiverPlayer);
         }
 
         return;
@@ -193,7 +222,7 @@
         );
         this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
       } else {
-        console.log("Game over - player", this.receiverPlayer.num, "won");
+        App.state.gameOver(this.attackPlayer, this.receiverPlayer);
       }
     }
 
@@ -205,6 +234,17 @@
       canvas = new Raphael("canvas", width, height);
 
     function init() {
+      App.state = new GameState();
+
+      App.state.on('change:isGameOver', function(model, isGameOver) {
+        console.log("isGameOver", isGameOver);
+        // if (isGameOver) {
+
+        // } else {
+
+        // }
+      });
+
       var player1 = new Player({ num: 1, initShipNum: INITIAL_NUM_SHIPS }),
         player2 = new Player({ num: 2, initShipNum: INITIAL_NUM_SHIPS }),
         player1View = new PlayerView({
@@ -218,14 +258,21 @@
       player2View.render(player2);
 
       $(".p1-ship").click(function() {
-        var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
-        pew.render();
+        if (!App.state.isGameOver) {
+          var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
+          pew.render();
+        }
       });
 
       $(".p2-ship").click(function() {
-        var pew = new Pew(canvas, this, player2, player1, PLAYER_2_COLOR);
-        pew.render();
+        if (!App.state.isGameOver) {
+          var pew = new Pew(canvas, this, player2, player1, PLAYER_2_COLOR);
+          pew.render();
+        }
       });
+
+      // Make App global for debugginer
+      window.App = App;
     }
 
     init();
