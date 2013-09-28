@@ -461,21 +461,27 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
   text-shadow: 1px 1px #660000, 2px 2px #660000;
-  opacity: 0; }
+  transition: all .5s .5s; }
   .intro p {
     margin-bottom: 1em; }
   .intro h2 {
     margin-top: 2.5em;
-    color: yellow;
     font-size: 1.6em;
     text-align: center;
     text-shadow: 1px 1px #660000, 2px 2px #660000, 3px 3px #660000, 4px 4px #660000; }
+    .intro h2 a {
+      color: yellow;
+      text-decoration: none; }
+      .intro h2 a:hover {
+        color: red; }
   .intro img {
     width: 200px;
     height: 200px;
     margin: 0 auto;
     display: block;
     margin-top: 2em; }
+  .intro.hidden {
+    opacity: 0; }
 
 .game-over-container {
   width: 100%;
@@ -504,7 +510,11 @@ body {
   height: 14em;
   margin: -7em 0 0 -4em;
   letter-spacing: 1px;
-  z-index: 9999; }
+  z-index: 9999;
+  cursor: pointer;
+  transition: all .4s; }
+  .start.hidden {
+    opacity: 0; }
   .start h1 {
     color: yellow;
     font-size: 2.8em;

@@ -425,5 +425,9 @@
     init();
   });
 
+  // start up
+  $('.start').click(function() {
+    console.log('boop');
+  });
 
 })();
