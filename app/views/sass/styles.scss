@@ -220,6 +220,9 @@ body{
   color: hsl(60, 100, 50);
   font-size: 1.5em;
   font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px $shadow, 2px 2px $shadow;
+  transition: all .5s .5s; 
 
   p{
     margin-bottom: 1em;
@@ -227,9 +230,31 @@ body{
 
   h2{
     margin-top: 2.5em;
-    color: hsl(60, 100, 50);
+    
     font-size: 1.6em;
     text-align: center;
+    text-shadow: 1px 1px $shadow, 2px 2px $shadow, 3px 3px $shadow, 4px 4px $shadow; 
+
+    a{
+      color: hsl(60, 100, 50);
+      text-decoration: none;
+
+      &:hover{
+        color: red;
+      }  
+    }
+  }
+
+  img{
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 2em;
+  }
+
+  &.hidden{
+    opacity: 0;
   }
 }
 
@@ -255,5 +280,62 @@ body{
     padding: 5px;
 
     text-decoration: none;
+  }
+}
+
+
+.start{
+  position: fixed;
+  font-size: 1.5em;
+  font-weight: 700;
+  width: 8em;
+  top: 50%;
+  left: 50%;
+  height: 14em;
+  margin: -7em 0 0 -4em;
+  letter-spacing: 1px;
+  z-index: 9999;
+  cursor: pointer;
+  transition: all .4s;
+
+  &.hidden{
+    opacity: 0;
+  }
+
+
+  h1{
+    color: hsl(60, 100, 50);
+    font-size: 2.8em;
+    @extend .clear-fix;
+    text-shadow: 1px 1px $shadow, 
+                 2px 2px $shadow,
+                 3px 3px $shadow, 
+                 4px 4px $shadow,
+                 5px 5px $shadow, 
+                 6px 6px $shadow,
+                 7px 7px $shadow, 
+                 8px 8px $shadow,
+                 9px 9px $shadow;
+    line-height: 1;
+
+    span{
+      float: left;
+    }
+
+    span:nth-child(2n){
+      position: relative;
+      left: 50%;
+      margin-left: -1em;
+    }
+
+    span:nth-child(3n){
+      float: right;
+    }
+
+    &.pew{
+      span:nth-child(2n){
+        margin-left: -1.05em;
+      }      
+    }
   }
 }

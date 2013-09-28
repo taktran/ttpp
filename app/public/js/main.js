@@ -9,7 +9,7 @@
 
   var MAX_SHIELD_LEVEL = 5;
   var MAX_NUM_SHIPS = 5;
-  var LENGTH_OF_BULLET_SNAKE = 5;
+  var LENGTH_OF_BULLET_SNAKE = 1;
   var BULLET_PATH_INTERVALS = 5; // The frequency path intervals
 
   var App = {};
@@ -425,5 +425,9 @@
     init();
   });
 
+  // start up
+  $('.start').click(function() {
+    console.log('boop');
+  });
 
 })();
