@@ -4,7 +4,9 @@
   var ANIMATION_INTERVAL = 5; // milliseconds
   var PLAYER_1_COLOR = "#5a55bd"; // Purple
   var PLAYER_2_COLOR = "#3fbf6a"; // Green
+
   var INITIAL_SHIELD_LEVEL = 5;
+  var INITIAL_NUM_SHIPS = 5;
 
   var Player = Backbone.Model.extend({
     /**
@@ -12,60 +14,99 @@
      *
      * @param  {Integer} num player number
      */
-    initialize: function(num) {
-      this.num = num;
+    initialize: function(hash) {
+      this.num = hash.num;
 
-      this.shieldLevel = {};
-      for (var i = 1; i < this.numShips(); i++) {
-        this.shieldLevel[i] = INITIAL_SHIELD_LEVEL;
+      this.ships = new Ships([], this);
+      for (var i = 0; i < hash.initShipNum; i++) {
+        this.ships.add(new Ship({
+          num: i,
+          playerModel: this
+        }));
       }
     },
-    numShips: function() {
-      return $(".p" + this.num + "-ships li").length;
+
+    /**
+     * Get ship
+     *
+     * @param  {Integer} num ship number
+     */
+    ship: function(num) {
+      return this.ships.get(num);
     },
-    elem: function(shipNum) {
-      return $(".p" + this.num + "-ships li:nth-child(" + shipNum + ")");
+
+    randomShip: function() {
+      return this.ships.random();
+    }
+  });
+
+  var Ship = Backbone.Model.extend({
+    idAttribute: 'num',
+    initialize: function(hash) {
+      this.num = hash.num;
+      this.playerNum = hash.playerModel.num;
+      this.shieldLevel = INITIAL_SHIELD_LEVEL;
     },
-    elemShip: function(shipNum) {
-      return this.elem(shipNum).find(".p" + this.num + "-ship");
+
+    elem: function() {
+      return $(".p" + this.playerNum + "-ships li:nth-child(" + this.num + ")");
     },
-    shipOffset: function(shipNum) {
-      return this.elem(shipNum).offset();
+    elemShip: function() {
+      return this.elem().find(".p" + this.playerNum + "-ship");
     },
+    shipOffset: function() {
+      return this.elem().offset();
+    },
+
     // Half way
-    x: function(shipNum) {
-      var left = this.shipOffset(shipNum)['left'],
-        width = this.elem(shipNum).width(),
+    x: function() {
+      var left = this.shipOffset()['left'],
+        width = this.elem().width(),
         x = left + (width / 2);
 
       return x;
     },
-    y: function(shipNum) {
-      var top = this.shipOffset(shipNum)['top'],
-        height = this.elem(shipNum).height();
+    y: function() {
+      var top = this.shipOffset()['top'],
+        height = this.elem().height();
 
       // Include height for player 1
       return (this.num === 1) ? top + height : top;
     },
 
-    decrementShieldLevel: function(shipNum) {
-      if (this.shieldLevel[shipNum]) {
-        this.shieldLevel[shipNum]--;
+    decrementShieldLevel: function() {
+      if (this.shieldLevel) {
+        this.shieldLevel--;
       }
     },
 
-    isDead: function(shipNum) {
-      return this.shieldLevel[shipNum] <= 0;
+    isDead: function() {
+      return this.shieldLevel <= 0;
+    }
+  });
+
+  var Ships = Backbone.Collection.extend({
+    model: Ship,
+    initialize: function(ships, playerModel) {
+      this.playerNum = playerModel.num;
     },
 
-    /**
-     * Get the ship number to number
-     */
-    randomShipNum: function() {
-      var numTargetShips = this.numShips(),
-        randomShip = Math.floor(Math.random() * numTargetShips) + 1;
+    numShips: function() {
+      return $(".p" + this.playerNum + "-ships li").length;
+    },
 
-      return randomShip;
+    random: function() {
+      var numTargetShips = this.numShips(),
+        randomShipNum = Math.floor(Math.random() * numTargetShips) + 1;
+
+      return this.get(randomShipNum);
+    }
+  });
+
+  var PlayerView = Backbone.View.extend({
+    template: _.template($("#player-template").html()),
+    render: function(player) {
+      this.$el.append(this.template(player));
     }
   });
 
@@ -90,7 +131,7 @@
       return this.$el.parent().prevAll().length + 1;
     },
 
-    animate: function(self, receiverShipNum) {
+    animate: function(self, receiverShip) {
       if (self.path.getTotalLength() <= self.counter){   //break as soon as the total length is reached
         clearInterval(self.animation);
 
@@ -99,22 +140,22 @@
         self.path.remove();
 
         // Remove shield
-        var receiverShip = self.receiverPlayer.elemShip(receiverShipNum);
+        var receiverShipElem = receiverShip.elem();
 
-        receiverShip.removeClass("level-" + self.receiverPlayer.shieldLevel[receiverShipNum]);
-        self.receiverPlayer.decrementShieldLevel(receiverShipNum);
-        receiverShip.addClass("level-" + self.receiverPlayer.shieldLevel[receiverShipNum]);
+        receiverShipElem.removeClass("level-" + receiverShip.shieldLevel);
+        receiverShip.decrementShieldLevel();
+        receiverShipElem.addClass("level-" + receiverShip.shieldLevel);
 
         // Flash alert class
-        receiverShip.addClass("shield-alert")
+        receiverShipElem.addClass("shield-alert")
           .fadeOut(200)
           .fadeIn(200, function() {
-            receiverShip.removeClass("shield-alert");
+            receiverShipElem.removeClass("shield-alert");
           });
 
         // Check if dead
-        if (self.receiverPlayer.isDead(receiverShipNum)) {
-          receiverShip.addClass("dead");
+        if (receiverShip.isDead()) {
+          receiverShipElem.addClass("dead");
         }
 
         return;
@@ -149,15 +190,15 @@
     // Fire pew pew
     render: function() {
       var shipNum = this.shipNum(),
-        receiverShipNum = this.receiverPlayer.randomShipNum();
+        receiverShip = this.receiverPlayer.randomShip();
       this.curve(
-        this.attackPlayer.x(shipNum),
-        this.attackPlayer.y(shipNum),
-        this.receiverPlayer.x(receiverShipNum),
-        this.receiverPlayer.y(receiverShipNum),
+        this.attackPlayer.ship(shipNum).x(),
+        this.attackPlayer.ship(shipNum).y(),
+        receiverShip.x(),
+        receiverShip.y(),
         this.color
       );
-      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShipNum);
+      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
     }
 
   });
@@ -168,8 +209,17 @@
       canvas = new Raphael("canvas", width, height);
 
     function init() {
-      var player1 = new Player(1),
-        player2 = new Player(2);
+      var player1 = new Player({ num: 1, initShipNum: INITIAL_NUM_SHIPS }),
+        player2 = new Player({ num: 2, initShipNum: INITIAL_NUM_SHIPS }),
+        player1View = new PlayerView({
+          el: $(".container")
+        }),
+        player2View = new PlayerView({
+          el: $(".container")
+        });
+
+      player1View.render(player1);
+      player2View.render(player2);
 
       $(".p1-ship").click(function() {
         var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
