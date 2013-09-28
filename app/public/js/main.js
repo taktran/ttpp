@@ -90,10 +90,12 @@
     },
 
     random: function() {
-      var numTargetShips = this.length,
-        randomShipNum = Math.floor(Math.random() * numTargetShips);
+      var shipsNotDead = _.reject(this.models, function(ship) {
+          return ship.isDead();
+        }),
+        randomShipNum = Math.floor(Math.random() * shipsNotDead.length);
 
-      return this.models[randomShipNum];
+      return shipsNotDead[randomShipNum];
     }
   });
 
@@ -180,14 +182,19 @@
     render: function() {
       var shipNum = this.shipNum(),
         receiverShip = this.receiverPlayer.randomShip();
-      this.curve(
-        this.attackPlayer.ship(shipNum).x(),
-        this.attackPlayer.ship(shipNum).y(),
-        receiverShip.x(),
-        receiverShip.y(),
-        this.color
-      );
-      this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
+
+      if (receiverShip) {
+        this.curve(
+          this.attackPlayer.ship(shipNum).x(),
+          this.attackPlayer.ship(shipNum).y(),
+          receiverShip.x(),
+          receiverShip.y(),
+          this.color
+        );
+        this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
+      } else {
+        console.log("Game over - player", this.receiverPlayer.num, "won");
+      }
     }
 
   });
