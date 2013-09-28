@@ -134,12 +134,17 @@ module.exports = function (grunt) {
       }
     },
 
+    clean: {
+      release: ["_site/*"]
+    },
+
     copy: {
       main: {
         files: [
           {
             expand: true,
-            src: ['app/public/**'],
+            cwd: 'app/public/',
+            src: ['**'],
             dest: '_site/'
           }
         ]
@@ -158,6 +163,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['connect', 'karma', 'watch']);
 
-  grunt.registerTask('deploy', ['copy', 'githubPages:production']);
+  grunt.registerTask('deploy', ['clean', 'copy', 'githubPages:production']);
 
 };
