@@ -178,12 +178,6 @@
     },
 
     animate: function(counter, self, receiverShip) {
-      if (!self.path.getTotalLength() || // HACK: Not sure why it gets in here
-          self.path.getTotalLength() <= counter) {
-        this.tween.stop();
-        return;
-      }
-
       var pos = self.path.getPointAtLength(counter);   //get the position (see Raphael docs)
       self.bullet.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
