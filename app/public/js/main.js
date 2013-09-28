@@ -7,9 +7,23 @@
   var GUIDE_COLOR = "red";
 
   var INITIAL_SHIELD_LEVEL = 5;
-  var INITIAL_NUM_SHIPS = 5;
+  var MAX_NUM_SHIPS = 5;
 
   var App = {};
+
+
+  function getQueryParams(qs) {
+    qs = qs.split("+").join(" ");
+
+    var params = {}, tokens,
+      re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+      params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+  }
 
   var GameState = Backbone.Model.extend({
     initialize: function() {
@@ -166,8 +180,10 @@
         // Delete bullet
         self.bullet.remove();
         self.path.remove();
-        self.guidePath1.remove();
-        self.guidePath2.remove();
+        if (App.guidesOn) {
+          self.guidePath1.remove();
+          self.guidePath2.remove();
+        }
 
         // Remove shield
         var receiverShipElem = receiverShip.elem();
@@ -230,29 +246,31 @@
         "stroke-opacity": 1
       });
 
-      // Guide lines
-      var guidePath1 = [
-        ["M", initialX, initialY],
-        ["L", ax, ay]
-      ];
-      this.guidePath1 = this.canvas.path(guidePath1).attr({
-        stroke: GUIDE_COLOR,
-        "stroke-width": 2,
-        "stroke-linecap": "round",
-        "stroke-opacity": 0.3,
-        "stroke-dasharray": [1,0,0,0,2]
-      });
-      var guidePath2 = [
-        ["M", bx, by],
-        ["L", finalX, finalY]
-      ];
-      this.guidePath2 = this.canvas.path(guidePath2).attr({
-        stroke: GUIDE_COLOR,
-        "stroke-width": 2,
-        "stroke-linecap": "round",
-        "stroke-opacity": 0.3,
-        "stroke-dasharray": [1,0,0,0,2]
-      });
+      if (App.guidesOn) {
+        // Guide lines
+        var guidePath1 = [
+          ["M", initialX, initialY],
+          ["L", ax, ay]
+        ];
+        this.guidePath1 = this.canvas.path(guidePath1).attr({
+          stroke: GUIDE_COLOR,
+          "stroke-width": 2,
+          "stroke-linecap": "round",
+          "stroke-opacity": 0.3,
+          "stroke-dasharray": [1,0,0,0,2]
+        });
+        var guidePath2 = [
+          ["M", bx, by],
+          ["L", finalX, finalY]
+        ];
+        this.guidePath2 = this.canvas.path(guidePath2).attr({
+          stroke: GUIDE_COLOR,
+          "stroke-width": 2,
+          "stroke-linecap": "round",
+          "stroke-opacity": 0.3,
+          "stroke-dasharray": [1,0,0,0,2]
+        });
+      }
     },
 
     shipNum: function() {
@@ -286,6 +304,20 @@
       canvas = new Raphael("canvas", width, height);
 
     function init() {
+      App.queryParams = getQueryParams(document.location.search);
+
+      // Turn curve guides on with ?guides=true
+      App.guidesOn = App.queryParams.guides;
+
+      // Change how many ships with ?ships=5 (max is 5)
+      App.numShips = MAX_NUM_SHIPS;
+      if (App.queryParams.ships &&
+          _.isNumber(parseInt(App.queryParams.ships, 10)) &&
+          parseInt(App.queryParams.ships, 10) > 0 &&
+          parseInt(App.queryParams.ships, 10) <= MAX_NUM_SHIPS) {
+        App.numShips = App.queryParams.ships;
+      }
+
       App.state = new GameState();
 
       App.state.on('change:isGameOver', function(model, isGameOver) {
@@ -301,8 +333,8 @@
         }
       });
 
-      var player1 = new Player({ num: 1, initShipNum: INITIAL_NUM_SHIPS }),
-        player2 = new Player({ num: 2, initShipNum: INITIAL_NUM_SHIPS }),
+      var player1 = new Player({ num: 1, initShipNum: App.numShips }),
+        player2 = new Player({ num: 2, initShipNum: App.numShips }),
         player1View = new PlayerView({
           el: $(".container")
         }),
