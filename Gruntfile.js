@@ -132,9 +132,20 @@ module.exports = function (grunt) {
       all: {
         path: 'http://<%= app.hostname %>:<%= app.port %>'
       }
+    },
+
+    githubPages: {
+      production: {
+        options: {
+          commitMessage: 'push to gh-pages'
+        },
+        src: '_site'
+      }
     }
   });
 
   grunt.registerTask('default', ['connect', 'karma', 'watch']);
+
+  grunt.registerTask('deploy', ['githubPages:production']);
 
 };

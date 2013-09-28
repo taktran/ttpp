@@ -34,6 +34,14 @@ Karma is run automatically when `grunt` is called. To run it manually
 
     karma start config/karma.conf.js
 
+## Deployment
+
+Deployed to github pages. To deploy
+
+1. Make `_site` folder if not already created
+2. Move files to publish into `_site` folder
+3. Run `grunt deploy`
+
 ## Authors
 
 * [Mark Durrant](https://twitter.com/M6_D6)
