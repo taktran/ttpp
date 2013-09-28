@@ -30,6 +30,13 @@
       <div id="canvas"></div>
     </div> <!-- end .container -->
 
+    <script type="text/template" id="game-over-template">
+      <div class="game-over-container">
+        <h1>Game over</h1>
+        <p>Player <%= App.state.get('winner').num %> won</p>
+      <div>
+    </script>
+
     <script type="text/template" id="player-template">
       <ul class="p<%= num %>-ships">
         <% _.each(ships.models, function(ship) { %>

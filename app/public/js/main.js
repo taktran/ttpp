@@ -15,9 +15,10 @@
       this.isGameOver = false;
     },
     gameOver: function(winner, loser) {
-      this.set('isGameOver', false);
       this.set('winner', winner);
       this.set('loser', loser);
+
+      this.set('isGameOver', true);
     }
   });
 
@@ -131,6 +132,13 @@
     }
   });
 
+  var GameOverView = Backbone.View.extend({
+    template: _.template($("#game-over-template").html()),
+    render: function(gameState) {
+      this.$el.append(this.template(gameState));
+    }
+  });
+
   // Pew pew pew! Fire pew view
   var Pew = Backbone.View.extend({
     initialize: function(canvas, attackerElem, attackPlayerModel, receiverPlayerModel, color) {
@@ -237,12 +245,16 @@
       App.state = new GameState();
 
       App.state.on('change:isGameOver', function(model, isGameOver) {
-        console.log("isGameOver", isGameOver);
-        // if (isGameOver) {
-
-        // } else {
-
-        // }
+        var gameOverView;
+        if (isGameOver) {
+          gameOverView = new GameOverView({
+            el: $(".container")
+          });
+          // TODO: Passing App.state as a parameter doesn't seem to work
+          gameOverView.render(App.state);
+        } else {
+          gameOverView.$el.find('.game-over-container').remove();
+        }
       });
 
       var player1 = new Player({ num: 1, initShipNum: INITIAL_NUM_SHIPS }),
