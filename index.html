@@ -7,9 +7,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Tap Tap Pew Pew</title>
+    <title>ttpp</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1, user-scalable=no" />
+
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:700|Roboto:700,900|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="css/styles.css">
 
@@ -27,31 +29,24 @@
     -->
 
     <div class="container">
-      <div id="canvas"></div>
+
+      <div class="start">
+        <h1><span>T</span><span>A</span><span>P</span></h1>
+        <h1><span>T</span><span>A</span><span>P</span></h1>
+        <h1 class="pew"><span>P</span><span>E</span><span>W</span></h1>
+        <h1 class="pew"><span>P</span><span>E</span><span>W</span></h1>
+      </div>
+
+      <div class="intro hidden">
+        <p>From world to world the war raged. Through eons and ages the conflict spread from system to system.</p>
+        <p>The people of Verde and Lila concurred countless Planets. The year is 3245 and there is no record of either side winning a decisive victory. You are our last hope of ending this most enduring of struggles.</p>
+        <p>You are tasked with protecting our fleet and ensuring the final and absolute destruction of our enemies. You are free to choose your own methods however their is one rule of law that we hold most sacred and shall never be defied…</p>
+
+        <h2><a href="ttpp.html">USE ONLY ONE FINGER!</a></h2>
+
+      </div>
+
     </div> <!-- end .container -->
-
-    <footer>
-      <p>Made for <a href="http://overtheair.org/">Over The Air 2013</a>. <a href="https://github.com/taktran/ttpp">Source code</a>.</p>
-    </footer>
-
-    <script type="text/template" id="game-over-template">
-      <div class="game-over-container">
-        <h1>Game over</h1>
-        <p>Player <%= App.state.get('winner').num %> won</p>
-
-        <p><a href="" class="restart">Restart</a></p>
-      <div>
-    </script>
-
-    <script type="text/template" id="player-template">
-      <ul class="p<%= num %>-ships">
-        <% _.each(ships.models, function(ship) { %>
-          <li data-id="<%= ship.id %>" class="ship-outer level-<%= ship.shieldLevel %>">
-            <div class="p<%= num %>-ship"></div>
-          </li>
-        <% }) %>
-      </ul>
-    </script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="vendor/jquery/jquery.min.js"><\/script>')</script>
@@ -59,9 +54,7 @@
     <script src="vendor/raphael/raphael-min.js"></script>
     <script src="vendor/underscore/underscore-min.js"></script>
     <script src="vendor/backbone/backbone-min.js"></script>
-    <script src="vendor/tweenjs/build/tween.min.js"></script>
-    <script src="vendor/RequestAnimationFrame/RequestAnimationFrame.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/intro.js"></script>
 
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

@@ -261,7 +261,7 @@ input[type="submit"] {
   padding-left: 1em; }
 
 .clear-fix:after, .p1-ships:after,
-.p2-ships:after {
+.p2-ships:after, .start h1:after {
   content: "";
   display: table;
   clear: both; }
@@ -471,14 +471,30 @@ body {
   position: relative;
   color: yellow;
   font-size: 1.5em;
-  font-weight: 700; }
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px #660000, 2px 2px #660000;
+  transition: all 0.5s 0.5s; }
   .intro p {
     margin-bottom: 1em; }
   .intro h2 {
     margin-top: 2.5em;
-    color: yellow;
     font-size: 1.6em;
-    text-align: center; }
+    text-align: center;
+    text-shadow: 1px 1px #660000, 2px 2px #660000, 3px 3px #660000, 4px 4px #660000; }
+    .intro h2 a {
+      color: yellow;
+      text-decoration: none; }
+      .intro h2 a:hover {
+        color: red; }
+  .intro img {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 2em; }
+  .intro.hidden {
+    opacity: 0; }
 
 .game-over-container {
   width: 100%;
@@ -496,3 +512,34 @@ body {
     color: white;
     padding: 5px;
     text-decoration: none; }
+
+.start {
+  position: fixed;
+  font-size: 1.5em;
+  font-weight: 700;
+  width: 8em;
+  top: 50%;
+  left: 50%;
+  height: 14em;
+  margin: -7em 0 0 -4em;
+  letter-spacing: 1px;
+  z-index: 9999;
+  cursor: pointer;
+  transition: all 0.4s; }
+  .start.hidden {
+    opacity: 0; }
+  .start h1 {
+    color: yellow;
+    font-size: 2.8em;
+    text-shadow: 1px 1px #660000, 2px 2px #660000, 3px 3px #660000, 4px 4px #660000, 5px 5px #660000, 6px 6px #660000, 7px 7px #660000, 8px 8px #660000, 9px 9px #660000;
+    line-height: 1; }
+    .start h1 span {
+      float: left; }
+    .start h1 span:nth-child(2n) {
+      position: relative;
+      left: 50%;
+      margin-left: -1em; }
+    .start h1 span:nth-child(3n) {
+      float: right; }
+    .start h1.pew span:nth-child(2n) {
+      margin-left: -1.05em; }
