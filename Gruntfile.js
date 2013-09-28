@@ -134,6 +134,18 @@ module.exports = function (grunt) {
       }
     },
 
+    copy: {
+      main: {
+        files: [
+          {
+            expand: true,
+            src: ['app/public/**'],
+            dest: '_site/'
+          }
+        ]
+      }
+    },
+
     githubPages: {
       production: {
         options: {
@@ -146,6 +158,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['connect', 'karma', 'watch']);
 
-  grunt.registerTask('deploy', ['githubPages:production']);
+  grunt.registerTask('deploy', ['copy', 'githubPages:production']);
 
 };

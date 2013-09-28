@@ -26,6 +26,7 @@
     "karma": "~0.8.6",
     "grunt-karma": "~0.4.4",
     "connect-livereload": "~0.2.0",
-    "grunt-github-pages": "0.0.3"
+    "grunt-github-pages": "0.0.3",
+    "grunt-contrib-copy": "~0.4.1"
   }
 }
