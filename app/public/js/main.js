@@ -6,7 +6,7 @@
   var PLAYER_2_COLOR = "#3fbf6a"; // Green
   var GUIDE_COLOR = "red";
 
-  var INITIAL_SHIELD_LEVEL = 5;
+  var MAX_SHIELD_LEVEL = 5;
   var MAX_NUM_SHIPS = 5;
 
   var App = {};
@@ -50,7 +50,8 @@
       for (var i = 0; i < hash.initShipNum; i++) {
         this.ships.add(new Ship({
           id: i,
-          playerModel: this
+          playerModel: this,
+          shieldLevel: hash.shieldLevel
         }));
       }
     },
@@ -83,7 +84,7 @@
   var Ship = Backbone.Model.extend({
     initialize: function(hash) {
       this.playerNum = hash.playerModel.num;
-      this.shieldLevel = INITIAL_SHIELD_LEVEL;
+      this.shieldLevel = hash.shieldLevel;
     },
 
     elem: function() {
@@ -309,13 +310,22 @@
       // Turn curve guides on with ?guides=true
       App.guidesOn = App.queryParams.guides;
 
-      // Change how many ships with ?ships=5 (max is 5)
+      // Change how many ships with ?ships=5 (range 1..5)
       App.numShips = MAX_NUM_SHIPS;
       if (App.queryParams.ships &&
           _.isNumber(parseInt(App.queryParams.ships, 10)) &&
           parseInt(App.queryParams.ships, 10) > 0 &&
           parseInt(App.queryParams.ships, 10) <= MAX_NUM_SHIPS) {
         App.numShips = App.queryParams.ships;
+      }
+
+      // Change the shield level with ?shields=5 (range 1..5)
+      App.shieldLevel = MAX_SHIELD_LEVEL;
+      if (App.queryParams.shields &&
+          _.isNumber(parseInt(App.queryParams.shields, 10)) &&
+          parseInt(App.queryParams.shields, 10) > 0 &&
+          parseInt(App.queryParams.shields, 10) <= MAX_SHIELD_LEVEL) {
+        App.shieldLevel = App.queryParams.shields;
       }
 
       App.state = new GameState();
@@ -333,8 +343,16 @@
         }
       });
 
-      var player1 = new Player({ num: 1, initShipNum: App.numShips }),
-        player2 = new Player({ num: 2, initShipNum: App.numShips }),
+      var player1 = new Player({
+          num: 1,
+          initShipNum: App.numShips,
+          shieldLevel: App.shieldLevel
+        }),
+        player2 = new Player({
+          num: 2,
+          initShipNum: App.numShips,
+          shieldLevel: App.shieldLevel
+        }),
         player1View = new PlayerView({
           el: $(".container")
         }),
