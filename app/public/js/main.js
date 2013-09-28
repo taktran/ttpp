@@ -4,6 +4,7 @@
   var ANIMATION_INTERVAL = 5; // milliseconds
   var PLAYER_1_COLOR = "#5a55bd"; // Purple
   var PLAYER_2_COLOR = "#3fbf6a"; // Green
+  var GUIDE_COLOR = "red";
 
   var INITIAL_SHIELD_LEVEL = 5;
   var INITIAL_NUM_SHIPS = 5;
@@ -165,6 +166,8 @@
         // Delete bullet
         self.bullet.remove();
         self.path.remove();
+        self.guidePath1.remove();
+        self.guidePath2.remove();
 
         // Remove shield
         var receiverShipElem = receiverShip.elem();
@@ -215,6 +218,30 @@
         "stroke-width": 2,
         "stroke-linecap": "round",
         "stroke-opacity": 1
+      });
+
+      // Guide lines
+      var guidePath1 = [
+        ["M", initialX, initialY],
+        ["L", ax, ay]
+      ];
+      this.guidePath1 = this.canvas.path(guidePath1).attr({
+        stroke: GUIDE_COLOR,
+        "stroke-width": 2,
+        "stroke-linecap": "round",
+        "stroke-opacity": 0.3,
+        "stroke-dasharray": [1,0,0,0,2]
+      });
+      var guidePath2 = [
+        ["M", bx, by],
+        ["L", finalX, finalY]
+      ];
+      this.guidePath2 = this.canvas.path(guidePath2).attr({
+        stroke: GUIDE_COLOR,
+        "stroke-width": 2,
+        "stroke-linecap": "round",
+        "stroke-opacity": 0.3,
+        "stroke-dasharray": [1,0,0,0,2]
       });
     },
 
