@@ -1,3 +1,4 @@
+/*global TWEEN:true, requestAnimationFrame:true */
 (function (){
   'use strict';
 
@@ -173,13 +174,11 @@
       this.receiverPlayer = receiverPlayerModel;
       this.color = color;
 
-      this.counter = 0;    // a counter that counts animation steps
       this.prevBullets = [];
     },
 
-    animate: function(self, receiverShip) {
-      if (self.path.getTotalLength() <= self.counter){   //break as soon as the total length is reached
-        clearInterval(self.animation);
+    animate: function(counter, self, receiverShip) {
+      if (self.path.getTotalLength() <= counter) {   //break as soon as the total length is reached
 
         // Delete bullet
         self.bullet.remove();
@@ -219,17 +218,15 @@
 
         return;
       }
-      var pos = self.path.getPointAtLength(self.counter);   //get the position (see Raphael docs)
+      var pos = self.path.getPointAtLength(counter);   //get the position (see Raphael docs)
       self.bullet.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
       // Draw rest of bullet snake
       for (var i = 0; i < LENGTH_OF_BULLET_SNAKE; i++) {
-        var prevCounter = Math.max(0, self.counter - (i * BULLET_PATH_INTERVALS));
+        var prevCounter = Math.max(0, counter - (i * BULLET_PATH_INTERVALS));
         var prevPos = self.path.getPointAtLength(prevCounter);
         self.prevBullets[i].attr({cx: prevPos.x, cy: prevPos.y});
       }
-
-      self.counter++; // count the step counter one up
     },
 
     curve: function(initialX, initialY, finalX, finalY, colour) {
@@ -303,7 +300,8 @@
 
     // Fire pew pew
     render: function() {
-      var shipNum = this.shipNum(),
+      var self = this,
+        shipNum = this.shipNum(),
         receiverShip = this.receiverPlayer.randomShip();
 
       if (receiverShip) {
@@ -314,7 +312,33 @@
           receiverShip.y(),
           this.color
         );
-        this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
+        // this.animation = setInterval(this.animate, ANIMATION_INTERVAL, this, receiverShip);
+
+        var pathData = {
+            counter: 0
+          },
+          pathDataFinal = {
+            counter: Math.floor(self.path.getTotalLength())
+          },
+          duration = self.path.getTotalLength() * ANIMATION_INTERVAL;
+
+        var tweenUpdate = function() {
+          requestAnimationFrame(tweenUpdate);
+          TWEEN.update();
+        };
+
+        var tween = new TWEEN.Tween(pathData)
+          .to(pathDataFinal, duration)
+          // NOTE: because it is a counter, can't use an easing that has negative
+          .easing(TWEEN.Easing.Quartic.InOut)
+          .onUpdate(function () {
+            self.animate(pathData.counter, self, self.receiverShip);
+          });
+
+        tween.start();
+
+        tweenUpdate();
+
       } else {
         App.state.gameOver(this.attackPlayer, this.receiverPlayer);
       }
