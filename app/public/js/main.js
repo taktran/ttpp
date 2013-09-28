@@ -55,6 +55,13 @@
 
     isDead: function() {
       return this.ships.allDead();
+    },
+
+    elemIsDead: function(shipElem) {
+      var id = $(shipElem).parent().data("id"),
+        ship = this.ships.get(id);
+
+      return ship.isDead();
     }
   });
 
@@ -270,14 +277,14 @@
       player2View.render(player2);
 
       $(".p1-ship").click(function() {
-        if (!App.state.isGameOver) {
+        if (!App.state.isGameOver && !player1.elemIsDead(this)) {
           var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
           pew.render();
         }
       });
 
       $(".p2-ship").click(function() {
-        if (!App.state.isGameOver) {
+        if (!App.state.isGameOver && !player2.elemIsDead(this)) {
           var pew = new Pew(canvas, this, player2, player1, PLAYER_2_COLOR);
           pew.render();
         }

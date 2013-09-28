@@ -367,6 +367,11 @@ body {
   .p1-ships .dead,
   .p2-ships .dead {
     opacity: 0.4; }
+    .p1-ships .dead .p1-ship,
+    .p1-ships .dead .p2-ship,
+    .p2-ships .dead .p1-ship,
+    .p2-ships .dead .p2-ship {
+      cursor: default; }
 
 .ship-outer {
   float: left;

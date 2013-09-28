@@ -85,6 +85,11 @@ body{
 
   .dead{
     opacity: 0.4;
+
+    .p1-ship,
+    .p2-ship{
+      cursor: default;
+    }
   }
 }
 
