@@ -244,7 +244,7 @@
         stroke: colour,
         "stroke-width": 2,
         "stroke-linecap": "round",
-        "stroke-opacity": 1
+        "stroke-opacity": App.guidesOn ? 1 : 0
       });
 
       if (App.guidesOn) {
