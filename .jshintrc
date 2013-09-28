@@ -39,6 +39,7 @@
     "expect": true,
     "beforeEach": true,
 
-    "Raphael": true
+    "Raphael": true,
+    "Backbone": true
   }
 }

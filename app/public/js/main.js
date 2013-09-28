@@ -1,87 +1,128 @@
 (function (){
   'use strict';
 
+  var ANIMATION_INTERVAL = 5; // milliseconds
+  var PLAYER_1_COLOR = "#5a55bd"; // Purple
+  var PLAYER_2_COLOR = "#3fbf6a"; // Green
+
   var e;
   var myPath;
   var animation;  //make the variables global, so you can access them in the animation function
 
+  var Player = Backbone.Model.extend({
+    /**
+     * Initialize player
+     *
+     * @param  {[type]} num player number
+     */
+    initialize: function(num) {
+      this.num = num;
+    },
+    elem: function(shipNum) {
+      return $(".p" + this.num + "-ships li:nth-child(" + shipNum + ")");
+    },
+    shipOffset: function(shipNum) {
+      return this.elem(shipNum).offset();
+    },
+    // Half way
+    x: function(shipNum) {
+      var left = this.shipOffset(shipNum)['left'],
+        width = this.elem(shipNum).width(),
+        x = left + (width / 2);
 
-  $(function() {
-    var canvas = {
-      height: window.outerHeight,
-      width: window.outerWidth
-    };
+      return x;
+    },
+    y: function(shipNum) {
+      var top = this.shipOffset(shipNum)['top'],
+        height = this.elem(shipNum).height();
 
-    var r = new Raphael("canvas", canvas.width, canvas.height),
-      ANIMATION_INTERVAL = 5; // milliseconds
+      // Include height for player 1
+      return (this.num === 1) ? top + height : top;
+    }
+  });
 
+  // Pew pew pew! Fire pew view
+  var Pew = Backbone.View.extend({
+    initialize: function(canvas, elem, attackPlayerModel, receiverPlayerModel, color) {
+      this.canvas = canvas;
+      this.setElement(elem);
+      this.attackPlayer = attackPlayerModel;
+      this.receiverPlayer = receiverPlayerModel;
+      this.color = color;
 
-    var counter = 0;    // a counter that counts animation steps
-    var animate = function() {
-      if (myPath.getTotalLength() <= counter){   //break as soon as the total length is reached
+      this.counter = 0;    // a counter that counts animation steps
+    },
+
+    /**
+     * Ship number based on what number the `el` is in the list. Start from 1.
+     *
+     * @return {Integer} ship number
+     */
+    shipNum: function() {
+      return this.$el.parent().prevAll().length + 1;
+    },
+
+    animate: function() {
+      if (myPath.getTotalLength() <= this.counter){   //break as soon as the total length is reached
         clearInterval(animation);
         return;
       }
-      var pos = myPath.getPointAtLength(counter);   //get the position (see Raphael docs)
+      var pos = myPath.getPointAtLength(this.counter);   //get the position (see Raphael docs)
       e.attr({cx: pos.x, cy: pos.y});  //set the circle position
 
-      counter++; // count the step counter one up
-    };
+      this.counter++; // count the step counter one up
+    },
 
-    function curve(initialX, initialY, finalX, finalY, colour) {
+    curve: function(initialX, initialY, finalX, finalY, colour) {
       var ax = Math.floor(Math.random() * 200) + initialX;
       var ay = Math.floor(Math.random() * 200) + (initialY - 100);
       var bx = Math.floor(Math.random() * 200) + (finalX - 200);
       var by = Math.floor(Math.random() * 200) + (finalY - 100);
-      e = r.circle(initialX, initialY, 5, 5).attr({
+      e = this.canvas.circle(initialX, initialY, 5, 5).attr({
         stroke: "none",
         fill: colour
       });
       var path = [["M", initialX, initialY], ["C", ax, ay, bx, by, finalX, finalY]];
-      myPath = r.path(path).attr({
+      myPath = this.canvas.path(path).attr({
         stroke: colour,
         "stroke-width": 2,
         "stroke-linecap": "round",
         "stroke-opacity": 1
       });
+    },
+
+    // Fire pew pew
+    render: function() {
+      var shipNum = this.shipNum();
+      this.curve(
+        this.attackPlayer.x(shipNum),
+        this.attackPlayer.y(shipNum),
+        this.receiverPlayer.x(shipNum),
+        this.receiverPlayer.y(shipNum),
+        this.color
+      );
+      animation = setInterval(this.animate, ANIMATION_INTERVAL);
     }
 
+  });
+
+  $(function() {
+    var height = window.outerHeight,
+      width = window.outerWidth,
+      canvas = new Raphael("canvas", width, height);
+
     function init() {
-      var player1 = {
-          // Half way
-          x: function() {
-            var left = $(".p1-ship-1").offset()['left'],
-              width = $(".p1-ship-1").width(),
-              x = left + (width / 2);
-
-            return x;
-          },
-          y: function() {
-            var top = $(".p1-ship-1").offset()['top'],
-              height = $(".p1-ship-1").height();
-
-            return top + height;
-          }
-        },
-        player2 = {
-          // Half way
-          x: function() {
-            var left = $(".p2-ship-1").offset()['left'],
-              width = $(".p2-ship-1").width(),
-              x = left + (width / 2);
-
-            return x;
-          },
-          y: function() {
-            var top = $(".p2-ship-1").offset()['top'];
-
-            return top;
-          }
-        };
+      var player1 = new Player(1),
+        player2 = new Player(2);
 
       $(".p1-ship").click(function() {
-        curve(player1.x(), player1.y(), player2.x(), player2.y(), "blue");
-        animation = setInterval(animate, ANIMATION_INTERVAL);
+        var pew = new Pew(canvas, this, player1, player2, PLAYER_1_COLOR);
+        pew.render();
+      });
+
+      $(".p2-ship").click(function() {
+        var pew = new Pew(canvas, this, player2, player1, PLAYER_2_COLOR);
+        pew.render();
       });
     }
 
