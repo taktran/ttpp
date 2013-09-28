@@ -201,10 +201,20 @@
     },
 
     curve: function(initialX, initialY, finalX, finalY, colour) {
-      var ax = Math.floor(Math.random() * 200) + initialX;
-      var ay = Math.floor(Math.random() * 200) + (initialY - 100);
-      var bx = Math.floor(Math.random() * 200) + (finalX - 200);
-      var by = Math.floor(Math.random() * 200) + (finalY - 100);
+      var goLeft = Math.floor(Math.random() * 2);
+      var ax, ay, bx, by;
+      if (goLeft) {
+        ax = initialX - Math.floor(Math.random() * 200);
+        ay = Math.floor(Math.random() * 200) + (initialY - 100);
+        bx = finalX + Math.floor(Math.random() * 200);
+        by = Math.floor(Math.random() * 200) + (finalY - 100);
+      } else {
+        ax = Math.floor(Math.random() * 200) + initialX;
+        ay = Math.floor(Math.random() * 200) + (initialY - 100);
+        bx = Math.floor(Math.random() * 200) + (finalX - 200);
+        by = Math.floor(Math.random() * 200) + (finalY - 100);
+      }
+
       this.bullet = this.canvas.circle(initialX, initialY, 5, 5).attr({
         stroke: "none",
         fill: colour
