@@ -1,8 +1,14 @@
-# ttpp
+# Tap Tap Pew Pew
 
-A website built using [generator-starttter](https://github.com/taktran/generator-starttter).
+A space shooter game made for the [Over The Air 2013](http://overtheair.org/) hackathon.
+
+Website built using [generator-starttter](https://github.com/taktran/generator-starttter).
 
 ## Development
+
+Install npm packages
+
+    npm install
 
 Start the server
 
@@ -27,3 +33,15 @@ Uses [karma](http://karma-runner.github.io/) and [jasmine](http://pivotal.github
 Karma is run automatically when `grunt` is called. To run it manually
 
     karma start config/karma.conf.js
+
+## Deployment
+
+Deployed to github pages. To deploy
+
+1. Make `_site` folder if not already created
+2. Run `grunt deploy` (copies everything from `app/public` to `_site` folder)
+
+## Authors
+
+* [Mark Durrant](https://twitter.com/M6_D6)
+* [Tak Tran](http://tutaktran.com)

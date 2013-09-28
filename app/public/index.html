@@ -28,44 +28,26 @@
 
     <div class="container">
       <div id="canvas"></div>
-
-      <ul class="p1-ships">
-        <li class="ship-outer">
-          <div class="p1-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p1-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p1-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p1-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p1-ship level-5"></div>
-        </li>
-      </ul>
-
-      <ul class="p2-ships">
-        <li class="ship-outer">
-          <div class="p2-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p2-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p2-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p2-ship level-5"></div>
-        </li>
-        <li class="ship-outer">
-          <div class="p2-ship level-5"></div>
-        </li>
-      </ul>
-
     </div> <!-- end .container -->
+
+    <script type="text/template" id="game-over-template">
+      <div class="game-over-container">
+        <h1>Game over</h1>
+        <p>Player <%= App.state.get('winner').num %> won</p>
+
+        <p><a href="" class="restart">Restart</a></p>
+      <div>
+    </script>
+
+    <script type="text/template" id="player-template">
+      <ul class="p<%= num %>-ships">
+        <% _.each(ships.models, function(ship) { %>
+          <li data-id="<%= ship.id %>" class="ship-outer level-<%= ship.shieldLevel %>">
+            <div class="p<%= num %>-ship"></div>
+          </li>
+        <% }) %>
+      </ul>
+    </script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="vendor/jquery/jquery.min.js"><\/script>')</script>
@@ -73,6 +55,8 @@
     <script src="vendor/raphael/raphael-min.js"></script>
     <script src="vendor/underscore/underscore-min.js"></script>
     <script src="vendor/backbone/backbone-min.js"></script>
+    <script src="vendor/tweenjs/build/tween.min.js"></script>
+    <script src="vendor/RequestAnimationFrame/RequestAnimationFrame.js"></script>
     <script src="js/main.js"></script>
 
     <script>

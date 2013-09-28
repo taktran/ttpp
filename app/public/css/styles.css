@@ -260,7 +260,8 @@ input[type="submit"] {
   list-style: disc;
   padding-left: 1em; }
 
-.clear-fix:after {
+.clear-fix:after, .p1-ships:after,
+.p2-ships:after {
   content: "";
   display: table;
   clear: both; }
@@ -351,7 +352,7 @@ body {
     position: fixed;
     width: 100%;
     height: 358px;
-    opacity: .3; }
+    opacity: .5; }
   body:before {
     background: url("../img/px-grad.png");
     -webkit-transform: rotate(180deg);
@@ -367,6 +368,14 @@ body {
 .p2-ships {
   position: fixed;
   width: 100%; }
+  .p1-ships .dead,
+  .p2-ships .dead {
+    opacity: 0.4; }
+    .p1-ships .dead .p1-ship,
+    .p1-ships .dead .p2-ship,
+    .p2-ships .dead .p1-ship,
+    .p2-ships .dead .p2-ship {
+      cursor: default; }
 
 .ship-outer {
   float: left;
@@ -382,20 +391,21 @@ body {
     left: -4px;
     background: url("../img/p-shield.svg");
     background-position: center top; }
-  .p1-ship.level-5:before {
-    height: 29px; }
-  .p1-ship.level-4:before {
-    height: 24px; }
-  .p1-ship.level-3:before {
-    height: 18px; }
-  .p1-ship.level-2:before {
-    height: 12px; }
-  .p1-ship.level-1:before {
-    height: 6px; }
-  .p1-ship.level-0:before {
-    height: 0; }
-  .p1-ship.shield-alert:before {
-    background: url("../img/shield-alert.svg"); }
+
+.p1-ships .level-5 .p1-ship:before {
+  height: 29px; }
+.p1-ships .level-4 .p1-ship:before {
+  height: 24px; }
+.p1-ships .level-3 .p1-ship:before {
+  height: 18px; }
+.p1-ships .level-2 .p1-ship:before {
+  height: 12px; }
+.p1-ships .level-1 .p1-ship:before {
+  height: 6px; }
+.p1-ships .level-0 .p1-ship:before {
+  height: 0; }
+.p1-ships .shield-alert .p1-ship:before {
+  background: url("../img/shield-alert.svg"); }
 
 .p2-ship {
   background: url("../img/g-ship.svg"); }
@@ -407,20 +417,21 @@ body {
     left: -4px;
     background: url("../img/g-shield.svg");
     background-position: center bottom; }
-  .p2-ship.level-5:before {
-    height: 29px; }
-  .p2-ship.level-4:before {
-    height: 24px; }
-  .p2-ship.level-3:before {
-    height: 18px; }
-  .p2-ship.level-2:before {
-    height: 12px; }
-  .p2-ship.level-1:before {
-    height: 6px; }
-  .p2-ship.level-0:before {
-    height: 0; }
-  .p2-ship.shield-alert:before {
-    background: url("../img/shield-alert.svg"); }
+
+.p2-ships .level-5 .p2-ship:before {
+  height: 29px; }
+.p2-ships .level-4 .p2-ship:before {
+  height: 24px; }
+.p2-ships .level-3 .p2-ship:before {
+  height: 18px; }
+.p2-ships .level-2 .p2-ship:before {
+  height: 12px; }
+.p2-ships .level-1 .p2-ship:before {
+  height: 6px; }
+.p2-ships .level-0 .p2-ship:before {
+  height: 0; }
+.p2-ships .shield-alert .p2-ship:before {
+  background: url("../img/shield-alert.svg"); }
 
 .p1-ship,
 .p2-ship {
@@ -450,3 +461,20 @@ body {
     color: yellow;
     font-size: 1.6em;
     text-align: center; }
+
+.game-over-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: white;
+  text-align: center;
+  padding-top: 50px; }
+  .game-over-container .restart {
+    background-color: black;
+    color: white;
+    padding: 5px;
+    text-decoration: none; }

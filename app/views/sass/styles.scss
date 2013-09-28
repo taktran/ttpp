@@ -63,7 +63,7 @@ body{
     position: fixed;
     width: 100%;
     height: 358px;
-    opacity: .3;
+    opacity: .5;
   }
 
   &:before{
@@ -83,10 +83,19 @@ body{
 
 .p1-ships,
 .p2-ships{
-  @extend .clea-fix;
+  @extend .clear-fix;
   position: fixed;
   width: 100%;
 
+
+  .dead{
+    opacity: 0.4;
+
+    .p1-ship,
+    .p2-ship{
+      cursor: default;
+    }
+  }
 }
 
 .ship-outer{
@@ -106,32 +115,34 @@ body{
     background: url('../img/p-shield.svg');
     background-position: center top;
   }
+}
 
-  &.level-5:before{
+.p1-ships{
+  .level-5 .p1-ship:before{
     height: 29px;
   }
 
-  &.level-4:before{
+  .level-4 .p1-ship:before{
     height: 24px;
   }
 
-  &.level-3:before{
+  .level-3 .p1-ship:before{
     height: 18px;
   }
 
-  &.level-2:before{
+  .level-2 .p1-ship:before{
     height: 12px;
   }
 
-  &.level-1:before{
+  .level-1 .p1-ship:before{
     height: 6px;
   }
 
-  &.level-0:before{
+  .level-0 .p1-ship:before{
     height: 0;
   }
 
-  &.shield-alert:before{
+  .shield-alert .p1-ship:before{
     background: url('../img/shield-alert.svg');
   }
 }
@@ -148,32 +159,34 @@ body{
     background: url('../img/g-shield.svg');
     background-position: center bottom;
   }
+}
 
-  &.level-5:before{
+.p2-ships{
+  .level-5 .p2-ship:before{
     height: 29px;
   }
 
-  &.level-4:before{
+  .level-4 .p2-ship:before{
     height: 24px;
   }
 
-  &.level-3:before{
+  .level-3 .p2-ship:before{
     height: 18px;
   }
 
-  &.level-2:before{
+  .level-2 .p2-ship:before{
     height: 12px;
   }
 
-  &.level-1:before{
+  .level-1 .p2-ship:before{
     height: 6px;
   }
 
-  &.level-0:before{
+  .level-0 .p2-ship:before{
     height: 0;
   }
 
-  &.shield-alert:before{
+  .shield-alert .p2-ship:before{
     background: url('../img/shield-alert.svg');
   }
 }
@@ -212,5 +225,30 @@ body{
     color: hsl(60, 100, 50);
     font-size: 1.6em;
     text-align: center;
+  }
+}
+
+.game-over-container {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  background-color: rgba(255, 255, 255, 0.5);
+  color: white;
+
+  text-align: center;
+
+  padding-top: 50px;
+
+  .restart {
+    background-color: black;
+    color: white;
+    padding: 5px;
+
+    text-decoration: none;
   }
 }
