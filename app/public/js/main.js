@@ -145,4 +145,12 @@
     init();
   });
 
+
+  // marks auto scroll shit.
+  var div = $('body');
+  setInterval(function(){
+      var pos = div.scrollTop();
+      div.scrollTop(++pos);
+  }, 100)​
+
 })();
