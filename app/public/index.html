@@ -33,8 +33,8 @@
     <script type="text/template" id="player-template">
       <ul class="p<%= num %>-ships">
         <% _.each(ships.models, function(ship) { %>
-          <li data-id="<%= ship.id %>" class="ship-outer">
-            <div class="p<%= num %>-ship level-<%= ship.get('shieldLevel') %>"></div>
+          <li data-id="<%= ship.id %>" class="ship-outer level-<%= ship.shieldLevel %>">
+            <div class="p<%= num %>-ship"></div>
           </li>
         <% }) %>
       </ul>

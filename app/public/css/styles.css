@@ -364,6 +364,9 @@ body {
 .p2-ships {
   position: fixed;
   width: 100%; }
+  .p1-ships .dead,
+  .p2-ships .dead {
+    opacity: 0.4; }
 
 .ship-outer {
   float: left;
@@ -379,20 +382,21 @@ body {
     left: -4px;
     background: url("../img/p-shield.svg");
     background-position: center top; }
-  .p1-ship.level-5:before {
-    height: 29px; }
-  .p1-ship.level-4:before {
-    height: 24px; }
-  .p1-ship.level-3:before {
-    height: 18px; }
-  .p1-ship.level-2:before {
-    height: 12px; }
-  .p1-ship.level-1:before {
-    height: 6px; }
-  .p1-ship.level-0:before {
-    height: 0; }
-  .p1-ship.shield-alert:before {
-    background: url("../img/shield-alert.svg"); }
+
+.p1-ships .level-5 .p1-ship:before {
+  height: 29px; }
+.p1-ships .level-4 .p1-ship:before {
+  height: 24px; }
+.p1-ships .level-3 .p1-ship:before {
+  height: 18px; }
+.p1-ships .level-2 .p1-ship:before {
+  height: 12px; }
+.p1-ships .level-1 .p1-ship:before {
+  height: 6px; }
+.p1-ships .level-0 .p1-ship:before {
+  height: 0; }
+.p1-ships .shield-alert .p1-ship:before {
+  background: url("../img/shield-alert.svg"); }
 
 .p2-ship {
   background: url("../img/g-ship.svg"); }
@@ -404,20 +408,21 @@ body {
     left: -4px;
     background: url("../img/g-shield.svg");
     background-position: center bottom; }
-  .p2-ship.level-5:before {
-    height: 29px; }
-  .p2-ship.level-4:before {
-    height: 24px; }
-  .p2-ship.level-3:before {
-    height: 18px; }
-  .p2-ship.level-2:before {
-    height: 12px; }
-  .p2-ship.level-1:before {
-    height: 6px; }
-  .p2-ship.level-0:before {
-    height: 0; }
-  .p2-ship.shield-alert:before {
-    background: url("../img/shield-alert.svg"); }
+
+.p2-ships .level-5 .p2-ship:before {
+  height: 29px; }
+.p2-ships .level-4 .p2-ship:before {
+  height: 24px; }
+.p2-ships .level-3 .p2-ship:before {
+  height: 18px; }
+.p2-ships .level-2 .p2-ship:before {
+  height: 12px; }
+.p2-ships .level-1 .p2-ship:before {
+  height: 6px; }
+.p2-ships .level-0 .p2-ship:before {
+  height: 0; }
+.p2-ships .shield-alert .p2-ship:before {
+  background: url("../img/shield-alert.svg"); }
 
 .p1-ship,
 .p2-ship {
@@ -427,9 +432,6 @@ body {
   background-size: 100%;
   cursor: pointer;
   position: relative; }
-  .p1-ship.dead,
-  .p2-ship.dead {
-    opacity: 0.4; }
 
 .p1-ships {
   top: 14px; }

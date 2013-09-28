@@ -82,6 +82,10 @@ body{
   position: fixed;
   width: 100%;
 
+
+  .dead{
+    opacity: 0.4;
+  }
 }
 
 .ship-outer{
@@ -101,32 +105,34 @@ body{
     background: url('../img/p-shield.svg');
     background-position: center top;
   }
+}
 
-  &.level-5:before{
+.p1-ships{
+  .level-5 .p1-ship:before{
     height: 29px;
   }
 
-  &.level-4:before{
+  .level-4 .p1-ship:before{
     height: 24px;
   }
 
-  &.level-3:before{
+  .level-3 .p1-ship:before{
     height: 18px;
   }
 
-  &.level-2:before{
+  .level-2 .p1-ship:before{
     height: 12px;
   }
 
-  &.level-1:before{
+  .level-1 .p1-ship:before{
     height: 6px;
   }
 
-  &.level-0:before{
+  .level-0 .p1-ship:before{
     height: 0;
   }
 
-  &.shield-alert:before{
+  .shield-alert .p1-ship:before{
     background: url('../img/shield-alert.svg');
   }
 }
@@ -143,32 +149,34 @@ body{
     background: url('../img/g-shield.svg');
     background-position: center bottom;
   }
+}
 
-  &.level-5:before{
+.p2-ships{
+  .level-5 .p2-ship:before{
     height: 29px;
   }
 
-  &.level-4:before{
+  .level-4 .p2-ship:before{
     height: 24px;
   }
 
-  &.level-3:before{
+  .level-3 .p2-ship:before{
     height: 18px;
   }
 
-  &.level-2:before{
+  .level-2 .p2-ship:before{
     height: 12px;
   }
 
-  &.level-1:before{
+  .level-1 .p2-ship:before{
     height: 6px;
   }
 
-  &.level-0:before{
+  .level-0 .p2-ship:before{
     height: 0;
   }
 
-  &.shield-alert:before{
+  .shield-alert .p2-ship:before{
     background: url('../img/shield-alert.svg');
   }
 }
@@ -181,10 +189,6 @@ body{
   background-size: 100%;
   cursor: pointer;
   position: relative;
-
-  &.dead{
-    opacity: 0.4;
-  }
 }
 
 .p1-ships{
