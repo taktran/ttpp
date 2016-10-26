@@ -30,7 +30,7 @@ To run the site using a different livereload port (default is `35729`), use the 
 
 ## Testing
 
-Uses [karma](http://karma-runner.github.io/) and [jasmine](http://pivotal.github.io/jasmine/).
+Uses [karma](http://karma-runner.github.io/) and [jasmine](http://jasmine.github.io/).
 
 Karma is run automatically when `grunt` is called. To run it manually
 
